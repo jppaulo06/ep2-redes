@@ -1,12 +1,9 @@
 package pacmanServer.controllers
 
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.decodeFromStream
-import kotlinx.serialization.json.encodeToStream
-import pacmanServer.errors.CustomException
-import pacmanServer.models.structures.Body
-import pacmanServer.models.structures.Message
+import pacmanServer.structures.Message
 import pacmanServer.views.Logger
 import java.net.Socket
 
@@ -15,7 +12,7 @@ class TCPConnectionController(private val socket: Socket) : Runnable {
     private val controller = Controller(socket.inetAddress)
 
     public override fun run() {
-        Logger.log("Connected: ${socket.localAddress}:${socket.port}", 1)
+        Logger.log("[INFO] Connected: ${socket.inetAddress}:${socket.port}", 1)
         listen()
     }
 
@@ -24,25 +21,17 @@ class TCPConnectionController(private val socket: Socket) : Runnable {
         val clientMessage: Message
 
         try {
-            clientMessage = Json.decodeFromStream(socket.getInputStream())
+            clientMessage = readNextMessage()
         }
         catch (e: Exception) {
             closeConnection(e)
             return
         }
 
-        val serverMessage: Message = try {
-            controller.handle(clientMessage)
-        }
-        catch (e: CustomException){
-            errorMessage(e)
-        }
-        catch (e: Exception){
-            errorMessage(e)
-        }
+        val serverMessage: Message = controller.handle(clientMessage)
 
         try {
-            Json.encodeToStream(serverMessage, socket.getOutputStream())
+            writeMessage(serverMessage)
         }
         catch (e: Exception) {
             closeConnection(e)
@@ -56,26 +45,34 @@ class TCPConnectionController(private val socket: Socket) : Runnable {
         listen()
     }
 
+    private fun readNextMessage(): Message {
+        val lengthBytes = ByteArray(4)
+        socket.getInputStream().read(lengthBytes)
+        val messageLength = lengthBytes.toString(Charsets.UTF_8).toInt()
+
+        val messageBytes = ByteArray(messageLength)
+        socket.getInputStream().read(messageBytes)
+
+        val message: Message = Json.decodeFromString(messageBytes.toString(Charsets.UTF_8))
+
+        Logger.log("[INFO]: message received: ${message.toString()}", 2)
+
+        return message
+    }
+
+    private fun writeMessage(message: Message){
+        Logger.log("[INFO] sending message ${Json.encodeToString(message)}", 2)
+        val bytesMessage = Json.encodeToString(message).toByteArray(Charsets.UTF_8)
+        val bytesLength = bytesMessage.size.toString().padStart(8, '0').toByteArray(Charsets.US_ASCII)
+        socket.getOutputStream().write(bytesLength + bytesMessage)
+    }
+
     private fun closeConnection(e: Exception? = null){
-        e?.let { Logger.log("[ERROR] ${e.message}", 0) }
-        Logger.log("Closing connection...", 0)
+        e?.let { Logger.log("[ERROR] $e" +
+                " \n${e.stackTrace}", 0) }
+        Logger.log("[ERROR] Closing connection...", 0)
         controller.flushSession()
         socket.close()
     }
 
-    private fun errorMessage(e: Exception): Message {
-        Logger.log("[ERROR]: ${e.message}", 0)
-        return when(e) {
-            is CustomException -> Message(
-                    type = "error",
-                    status = e.status,
-                    body = Body(info = e.message)
-                )
-            else -> Message(
-                type = "error",
-                status = 500,
-                body = Body(info = "There was an unexpected error :(")
-            )
-        }
-    }
 }

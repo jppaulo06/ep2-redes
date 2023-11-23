@@ -1,13 +1,10 @@
 package pacmanServer.views
 
-import java.net.ServerSocket
-
 import pacmanServer.controllers.TCPConnectionController
+import java.net.ServerSocket
 import kotlin.system.exitProcess
 
-class TCPServer(): Runnable {
-
-    private val port = Config.port;
+class TCPServer(private val port: Int): Runnable {
 
     override fun run() {
         val serverSocket: ServerSocket
@@ -19,10 +16,13 @@ class TCPServer(): Runnable {
             Logger.log("[ERROR] Could not start server", 0)
             exitProcess(1)
         }
-        while (true) {
-            val clientSocket = serverSocket.accept()
-            Logger.log("Client connected: ${clientSocket.inetAddress.hostAddress}", 1)
-            Thread(TCPConnectionController(clientSocket)).start()
-        }
+        listen(serverSocket)
+    }
+
+    private tailrec fun listen(serverSocket: ServerSocket) {
+        val clientSocket = serverSocket.accept()
+        Logger.log("Client connected: ${clientSocket.inetAddress.hostAddress}", 1)
+        Thread(TCPConnectionController(clientSocket)).start()
+        listen(serverSocket)
     }
 }

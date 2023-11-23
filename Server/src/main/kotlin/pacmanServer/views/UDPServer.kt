@@ -1,50 +1,49 @@
 package pacmanServer.views
 
-import Config
-import kotlinx.coroutines.channels.Channel
+import Global
 import pacmanServer.controllers.UDPConnectionController
 import java.net.DatagramPacket
 import java.net.DatagramSocket
-import kotlin.system.exitProcess
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.SynchronousQueue
 
-class UDPServer(): Runnable {
+class UDPServer(private val port: Int): Runnable {
 
-    private val port = Config.port;
-    private val channelMap = HashMap<String, Channel<String>>()
+    private val channelMap = HashMap<String, BlockingQueue<ByteArray>>()
+    private val buffer = ByteArray(Global.maxDatagramSize)
 
     override fun run() {
         TODO()
-        start()
-    }
-
-    fun start() {
-        TODO()
         val serverSocket: DatagramSocket
-        val buffer = ByteArray(1024)
         try {
             serverSocket = DatagramSocket(port)
-            Logger.log("[INFO] Server is listening on port $port", 0)
+            Logger.logInfo("UDP server is listening on port $port", 0)
         }
         catch (e: Exception) {
-            Logger.log("[ERROR] Could not start server", 0)
-            exitProcess(1)
+            Logger.logError("Could not start UDP server", 0)
+            return
         }
-        while (true) {
-            val packet = DatagramPacket(buffer, buffer.size)
-            serverSocket.receive(packet)
-            val clientAddress = packet.address
-            val clientPort = packet.port
-            val data = String(packet.data, 0, packet.length)
-            val key = "$clientAddress:$clientPort"
+        listen(serverSocket)
+    }
 
-            if (channelMap[key] == null) {
-                Channel<String>().let { channel ->
-                    channelMap[key] = channel
-                    Thread(UDPConnectionController(channel)).start()
-                }
-            }
+    private tailrec fun listen(serverSocket: DatagramSocket) {
+        val datagram = DatagramPacket(buffer, buffer.size)
+        serverSocket.receive(datagram)
 
-            //channelMap[key]!!.send("oi")
+        val clientAddress = datagram.address
+        val clientPort = datagram.port
+
+        val key = "$clientAddress:$clientPort"
+
+        if (channelMap[key] == null) {
+            Logger.log("[INFO] New key: $key", 1)
+            val udpClientQueue: BlockingQueue<ByteArray> = SynchronousQueue()
+            channelMap[key] = udpClientQueue
+            Thread(UDPConnectionController(udpClientQueue)).start()
         }
+
+        channelMap[key]!!.put(buffer)
+
+        listen(serverSocket)
     }
 }

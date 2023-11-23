@@ -1,36 +1,45 @@
 package pacmanServer.models
 
-import pacmanServer.models.structures.Session
-import pacmanServer.errors.InvalidCredentials
-import pacmanServer.models.structures.User
-import pacmanServer.models.structures.UserInfo
+import pacmanServer.structures.errors.InvalidCredentials
+import pacmanServer.structures.Session
+import pacmanServer.structures.User
+import pacmanServer.structures.UserInfo
 import pacmanServer.views.Logger
 import java.util.concurrent.ConcurrentHashMap
 
 class UserManager private constructor() {
 
     companion object {
-        private val instance: UserManager by lazy { UserManager() }
+        @Volatile
+        private var instance: UserManager? = null
 
-        fun getInstance(): UserManager{
-            return instance
-        }
+        fun getInstance() =
+            instance ?: synchronized(this) {
+                instance ?: UserManager().also { instance = it }
+            }
     }
 
     private val users = ConcurrentHashMap<Username, User>()
-    private val passwords = ConcurrentHashMap<Username, Password>()
 
     fun register(username: Username, password: Password){
         if(users[username] != null) {
             throw InvalidCredentials("Username already exists")
         }
-        users[username] = User(username = username, score = 0)
-        passwords[username] = password
+        users[username] = User(username = username, password = password, score = 0)
         Logger.log("[INFO] User $username created", 1)
+
     }
 
     fun matches(username: Username, password: Password): Boolean {
-        return passwords[username] == password
+        return users[username]?.password == password
+    }
+
+    fun changePassword(username: Username, password: Password) {
+        users[username]!!.password = password
+    }
+
+    fun getUserChallengePort(username: Username) {
+        val port = users[username]!!.session!!.port
     }
 
     fun updateScore(username: Username, newScore: Score) {
@@ -51,10 +60,6 @@ class UserManager private constructor() {
 
     fun existsUser(username: Username): Boolean {
         return users[username] != null
-    }
-
-    fun getUser(username: Username): UserInfo {
-        return UserInfo(users[username]!!)
     }
 
     fun getUsers(): List<UserInfo> {

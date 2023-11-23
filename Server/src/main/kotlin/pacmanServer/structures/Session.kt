@@ -1,19 +1,34 @@
-package pacmanServer.models.structures
+package pacmanServer.structures
 
-import pacmanServer.errors.InvalidAuthentication
+import pacmanServer.structures.errors.InvalidAuthentication
+import pacmanServer.structures.errors.InvalidMessage
 import java.net.InetAddress
 
 data class Session(
     val address: InetAddress,
     var username: String? = null,
-    var state: SessionState = SessionState.Offline,
-    var lastHeartbeat: Int = 0
+    private var state: SessionState = SessionState.Offline,
+    var lastHeartbeat: Int = 0,
+    var port: Int = -1
 ){
 
     enum class SessionState {
         Offline,
         LoggedIn,
-        Playing,
+        Playing;
+
+        override fun toString(): String {
+            return when(this) {
+                Offline -> "offline"
+                LoggedIn -> "online"
+                Playing -> "playing"
+            }
+        }
+    }
+
+    fun defineChallengePort(port: Int) {
+        if(port <= 1000) throw InvalidMessage("Port must not be privileged")
+        this.port = port
     }
 
     fun login(username: String){
@@ -52,10 +67,6 @@ data class Session(
     }
 
     fun stateString(): String {
-        return when(state) {
-            SessionState.Offline -> "offline"
-            SessionState.LoggedIn -> "loggedIn"
-            SessionState.Playing -> "playing"
-        }
+        return state.toString()
     }
 }

@@ -1,4 +1,4 @@
-package pacmanServer.errors
+package pacmanServer.structures.errors
 
 abstract class CustomException(
     message: String = "Something went wrong :(",
