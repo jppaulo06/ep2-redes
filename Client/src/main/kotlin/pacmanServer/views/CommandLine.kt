@@ -1,7 +1,5 @@
 package pacmanServer.views
 
-import pacmanServer.models.Game
-
 object CommandLine {
 
     private const val ERROR_RED = "\u001B[31m"
@@ -25,12 +23,9 @@ object CommandLine {
         println(ERROR_RED + message + COLOR_RESET)
     }
 
-    fun logError(e: Exception){
-        logError("Something went wrong: ${e.message}")
-    }
-
-    fun logGame(game: Game){
-        for(line in game.grid){
+    fun logGame(grid: List<List<Char>>){
+        println("")
+        for(line in grid){
             for (element in line) {
                 print(element)
             }
@@ -43,11 +38,11 @@ object CommandLine {
         return commands[0] to commands.subList(1, commands.size)
     }
 
-    fun logCLI(){
+    fun logCommandLine(){
         print("Pac-Man> ")
     }
 
-    fun logCommandLine(){
-        print("Pac-Man> ")
+    fun clear() {
+        print("\u001b[H\u001b[2J")
     }
 }

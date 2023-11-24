@@ -8,5 +8,5 @@ data class UserInfo(
     val username: String,
     val score: Int,
 ) {
-    constructor(user: User) : this(user.session!!.stateString(), user.username, user.score) {}
+    constructor(user: User) : this(user.session?.stateString() ?: "offline", user.username, user.score) {}
 }

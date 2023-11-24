@@ -1,15 +1,23 @@
-import pacmanServer.views.Logger
+
+import pacmanServer.structures.errors.InvalidGrid
 import java.io.File
-import kotlin.system.exitProcess
 
 object Global {
     const val serverDefaultPort = 3000
     const val maxDatagramSize = 5000
     const val logLevel = 2
     const val logPath = "src/main/resources/logs_pacman"
+    const val usersFilePath = "src/main/resources/users_pacman"
 
     private const val gridPath = "src/main/resources/grid.txt"
-    val grid by lazy { readGrid(gridPath) }
+    val grid: List<List<Char>>
+
+    init {
+        grid = readGrid(gridPath)
+        if(!gridIsValid()) throw InvalidGrid()
+    }
+
+    fun load() = Unit
 
     private fun readGrid(filePath: String): List<List<Char>> {
         val lines = File(filePath).readLines()
@@ -21,13 +29,34 @@ object Global {
         for (i in 0..<numRows) {
             val line = lines[i]
             if(numCols != line.length) {
-                Logger.logError("Grid provided is not valid. Exiting...", 0)
-                exitProcess(1)
+                throw InvalidGrid()
             }
             for (j in 0..<numCols)
                 grid[i][j] = line[j]
         }
 
         return grid
+    }
+
+    private fun gridIsValid(): Boolean{
+        var localGhost = false
+        val numRows = grid.size
+        val numCols = grid[0].size
+
+        for(row in grid){
+            if(row.size != numCols) return false
+            for(char in row){
+                when(char){
+                    'F' -> {
+                        if(localGhost) return false
+                        localGhost = true
+                    }
+                    '*', '.', ' ' -> continue
+                    else -> return false
+                }
+            }
+        }
+
+        return localGhost && grid[numRows/2][numCols/2] == ' '
     }
 }

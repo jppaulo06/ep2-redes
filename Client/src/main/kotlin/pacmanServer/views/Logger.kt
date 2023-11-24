@@ -14,34 +14,39 @@ object Logger {
     fun log(message: String, level: Int) {
         if (level <= logLevel)
             println(message)
-        writer.write(message)
+        writer.write(message + "\n")
+        writer.flush()
     }
 
     fun logInfo(message: String, level: Int){
         val formattedMessage = "[INFO] $message"
         if (level <= logLevel)
             println(formattedMessage)
-        writer.write(message)
+        writer.write(formattedMessage + "\n")
+        writer.flush()
     }
 
     fun logWarning(message: String, level: Int){
         val formattedMessage = "[WARNING] $message"
         if (level <= logLevel)
             println(WARNING_YELLOW + formattedMessage + COLOR_RESET)
-        writer.write(formattedMessage)
+        writer.write(formattedMessage + "\n")
+        writer.flush()
     }
 
     fun logError(message: String, level: Int){
         val formattedMessage = "[ERROR] $message"
         if (level <= logLevel)
             println(ERROR_RED + formattedMessage + COLOR_RESET)
-        writer.write(formattedMessage)
+        writer.write(formattedMessage + "\n")
+        writer.flush()
     }
 
     fun logError(e: Exception, level: Int){
         val formattedMessage = "[ERROR] ${e.message}"
         if (level <= logLevel)
             println(ERROR_RED + formattedMessage + COLOR_RESET)
-        writer.write(formattedMessage)
+        writer.write(formattedMessage + "\n")
+        writer.flush()
     }
 }

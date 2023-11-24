@@ -35,7 +35,6 @@ class TCPClientWriter(
         }
         catch (e: Exception) {
             Logger.logError("Failed to send message", 0)
-            clientWriterQueue.put(clientMessage)
             return
         }
         write()

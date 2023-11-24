@@ -1,0 +1,40 @@
+[INFO] Loading user joao
+[INFO] Loading user bla
+[INFO] Users loaded successfully
+[INFO] Server is listening on port 3000
+Client connected: 127.0.0.1
+[INFO] Connected: /127.0.0.1:33040
+[INFO] Message received: Message(type=command, command=listUsers, status=null, body=null)
+[INFO] Received clientMessage of type command
+[INFO] Getting all users
+[INFO] Sending message {"type":"commandAck","command":"listUsers","status":200,"body":{"users":[{"state":"offline","username":"joao","score":0},{"state":"offline","username":"bla","score":0}]}}
+[INFO] Message received: Message(type=command, command=loginUser, status=null, body=Body(info=null, username=joao, password=paulo, newPassword=null, address=null, port=3001, score=null, user=null, users=null, grid=null))
+[INFO] Received clientMessage of type command
+[INFO] User joao save session
+[INFO] Sending message {"type":"commandAck","command":"loginUser","status":200,"body":{"info":"User logged in!","username":"joao"}}
+[INFO] Message received: Message(type=command, command=startGame, status=null, body=null)
+[INFO] Received clientMessage of type command
+[INFO] Sending message {"type":"commandAck","command":"startGame","status":200,"body":{"info":"User is now in playing mode","grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".",".",".",".","*",".",".",".",".",".",".",".","F",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=command, command=stopGame, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=0, user=null, users=null, grid=null))
+[INFO] Received clientMessage of type command
+[INFO] Incrementing score of joao by 0
+[INFO] Sending message {"type":"commandAck","command":"stopGame","status":200,"body":{"info":"User stopped playing"}}
+[INFO] Message received: Message(type=command, command=listUsers, status=null, body=null)
+[INFO] Received clientMessage of type command
+[INFO] Getting all users
+[INFO] Sending message {"type":"commandAck","command":"listUsers","status":200,"body":{"users":[{"state":"online","username":"joao","score":0},{"state":"offline","username":"bla","score":0}]}}
+[INFO] Message received: Message(type=command, command=loginUser, status=null, body=Body(info=null, username=bla, password=123, newPassword=null, address=null, port=3001, score=null, user=null, users=null, grid=null))
+[INFO] Received clientMessage of type command
+[ERROR]: Wrong username or password
+[ERROR]: Responding client with error message...
+[INFO] Sending message {"type":"error","status":400,"body":{"info":"Wrong username or password"}}
+[INFO] Message received: Message(type=command, command=logoutUser, status=null, body=null)
+[INFO] Received clientMessage of type command
+[INFO] Sending message {"type":"commandAck","command":"logoutUser","status":200,"body":{"info":"User logged out!","username":"joao"}}
+[INFO] Message received: Message(type=command, command=logoutUser, status=null, body=null)
+[INFO] Received clientMessage of type command
+[ERROR]: User is not logged in
+[ERROR]: Responding client with error message...
+[INFO] Sending message {"type":"error","status":400,"body":{"info":"User is not logged in"}}
+[INFO] Connection has ended with client /127.0.0.1:33040
+[INFO] Closing socket with /127.0.0.1:33040

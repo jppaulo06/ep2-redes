@@ -33,7 +33,7 @@ fun main(args: Array<String>) {
         exitProcess(1)
     }
 
-    Client(address, port).start()
+    client.start()
 }
 
 fun logHelp(){

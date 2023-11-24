@@ -11,7 +11,6 @@ import java.net.InetAddress
 
 class Controller(private val address: InetAddress) {
 
-    private val userManager = UserManager.getInstance()
     private var session: Session = Session(address)
 
     fun flushSession() {
@@ -59,7 +58,7 @@ class Controller(private val address: InetAddress) {
         val username: String = clientMessage.body.username
         val password: String = clientMessage.body.password
 
-        userManager.register(username, password)
+        UserManager.register(username, password)
 
         return Message(
             type = "commandAck",
@@ -82,14 +81,14 @@ class Controller(private val address: InetAddress) {
         val password: String = clientMessage.body.password
         val port: Int = clientMessage.body.port
 
-        if(userManager.matches(username, password)){
+        if(UserManager.matches(username, password)){
             if(session.isLoggedIn()){
                 throw InvalidAuthentication("[ERROR] User is already logged in")
             }
 
             session.defineChallengePort(port)
             session.login(username)
-            userManager.saveSession(username, session)
+            UserManager.saveSession(username, session)
 
             return Message(
                 type = "commandAck",
@@ -128,11 +127,11 @@ class Controller(private val address: InetAddress) {
             throw InvalidAuthentication("User is not logged in")
         }
 
-        if(!userManager.matches(session.username!!, clientMessage.body.password)){
+        if(!UserManager.matches(session.username!!, clientMessage.body.password)){
             throw InvalidAuthentication("Password doesn't match current password")
         }
 
-        userManager.changePassword(session.username!!, clientMessage.body.newPassword)
+        UserManager.changePassword(session.username!!, clientMessage.body.newPassword)
 
         return Message(
             type = "commandAck",
@@ -158,11 +157,18 @@ class Controller(private val address: InetAddress) {
     }
 
     private fun handleStopGame(clientMessage: Message): Message {
-        if(session.isOffline()){
-            throw InvalidAuthentication("User is not logged in")
+        if(clientMessage.body?.score == null){
+            throw InvalidMessage("Score not provided when finishing game")
+        }
+
+        val score = clientMessage.body.score
+
+        if(!session.isPlaying()){
+            throw InvalidAuthentication("User is not playing")
         }
 
         session.stopPlaying()
+        UserManager.updateScore(session.username!!, score)
 
         return Message(
             type = "commandAck",
@@ -182,11 +188,11 @@ class Controller(private val address: InetAddress) {
         // TODO: Verify if the user is not already playing with someone. There is a lot of logic to implement
         // of remote playing yet...
 
-        if(!userManager.existsUser(username)){
+        if(!UserManager.existsUser(username)){
             throw InvalidUser("User $username does not exist")
         }
 
-        val session = userManager.getSession(username)!!
+        val session = UserManager.getSession(username)!!
 
         return Message(
             type = "commandAck",
@@ -201,7 +207,7 @@ class Controller(private val address: InetAddress) {
             type = "commandAck",
             command = clientMessage.command,
             status = 200,
-            body = Body(users = userManager.getUsers())
+            body = Body(users = UserManager.getUsers())
         )
     }
 
@@ -222,7 +228,7 @@ class Controller(private val address: InetAddress) {
            throw InvalidAuthentication("User is not logged in")
         }
         val score = clientMessage.body.score
-        userManager.updateScore(session.username!!, score)
+        UserManager.updateScore(session.username!!, score)
         return Message(
             type = "commandAck",
             command = clientMessage.command,

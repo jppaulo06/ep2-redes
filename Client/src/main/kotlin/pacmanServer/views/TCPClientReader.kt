@@ -1,6 +1,5 @@
 package pacmanServer.views
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import pacmanServer.structures.Message
 import pacmanServer.structures.errors.ExceptionConnectionClosed
@@ -17,7 +16,6 @@ class TCPClientReader(
         listen()
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     private tailrec fun listen() {
         val clientMessage: Message
 
@@ -25,7 +23,7 @@ class TCPClientReader(
             clientMessage = readNextMessage()
         }
         catch (e: ExceptionConnectionClosed){
-            Logger.logError("Connection with server has been lost", 0)
+            Logger.logInfo("Server has closed the connection", 0)
             return
         }
         catch (e: Exception) {
@@ -33,7 +31,7 @@ class TCPClientReader(
             return
         }
 
-        Logger.log("Received message of type ${clientMessage.type}", 0)
+        Logger.logInfo("Received message of type ${clientMessage.type}", 2)
 
         when(clientMessage.type) {
             "hearbeat" -> clientWriterQueue.put(Message(type = "heartbeatAck"))
@@ -45,12 +43,15 @@ class TCPClientReader(
 
     private fun readNextMessage(): Message {
         val lengthBytes = ByteArray(8)
-        inputStream.read(lengthBytes)
-        if(lengthBytes.size == 0) throw ExceptionConnectionClosed("Connection has been lost")
-        val messageLength = lengthBytes.toString(Charsets.US_ASCII).toInt()
 
+        var ret = inputStream.read(lengthBytes)
+        if(ret == -1) throw ExceptionConnectionClosed()
+
+        val messageLength = lengthBytes.toString(Charsets.US_ASCII).toInt()
         val messageBytes = ByteArray(messageLength)
-        inputStream.read(messageBytes)
+
+        ret = inputStream.read(messageBytes)
+        if(ret == -1) throw ExceptionConnectionClosed()
 
         val message: Message = Json.decodeFromString(messageBytes.toString(Charsets.UTF_8))
 

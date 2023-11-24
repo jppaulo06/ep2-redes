@@ -1,0 +1,8 @@
+
+
+Refactor the code to make it prettier
+Make the client more secure using the states
+Send score aftermatch
+Seems like the local ghost isnt moving too well
+
+Create heartbeat

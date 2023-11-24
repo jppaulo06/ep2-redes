@@ -12,7 +12,7 @@ class TCPConnectionController(private val socket: Socket) : Runnable {
     private val controller = Controller(socket.inetAddress)
 
     public override fun run() {
-        Logger.log("[INFO] Connected: ${socket.inetAddress}:${socket.port}", 1)
+        Logger.logInfo("Connected: ${socket.inetAddress}:${socket.port}", 1)
         listen()
     }
 
@@ -47,32 +47,40 @@ class TCPConnectionController(private val socket: Socket) : Runnable {
 
     private fun readNextMessage(): Message {
         val lengthBytes = ByteArray(4)
-        socket.getInputStream().read(lengthBytes)
-        val messageLength = lengthBytes.toString(Charsets.UTF_8).toInt()
 
+        var ret = socket.getInputStream().read(lengthBytes)
+        if(ret == -1) {
+            Logger.logInfo("Connection has ended with client ${socket.inetAddress}:${socket.port}", 0)
+            throw Exception()
+        }
+
+        val messageLength = lengthBytes.toString(Charsets.UTF_8).toInt()
         val messageBytes = ByteArray(messageLength)
-        socket.getInputStream().read(messageBytes)
+
+        ret = socket.getInputStream().read(messageBytes)
+        if(ret == -1) {
+            Logger.logInfo("Connection has ended with client ${socket.inetAddress}:${socket.port}", 0)
+            throw Exception()
+        }
 
         val message: Message = Json.decodeFromString(messageBytes.toString(Charsets.UTF_8))
 
-        Logger.log("[INFO]: message received: ${message.toString()}", 2)
+        Logger.logInfo("Message received: ${message.toString()}", 2)
 
         return message
     }
 
     private fun writeMessage(message: Message){
-        Logger.log("[INFO] sending message ${Json.encodeToString(message)}", 2)
+        Logger.logInfo("Sending message ${Json.encodeToString(message)}", 2)
         val bytesMessage = Json.encodeToString(message).toByteArray(Charsets.UTF_8)
         val bytesLength = bytesMessage.size.toString().padStart(8, '0').toByteArray(Charsets.US_ASCII)
         socket.getOutputStream().write(bytesLength + bytesMessage)
     }
 
     private fun closeConnection(e: Exception? = null){
-        e?.let { Logger.log("[ERROR] $e" +
-                " \n${e.stackTrace}", 0) }
-        Logger.log("[ERROR] Closing connection...", 0)
+        e?.message?.let { Logger.logError(it, 1) }
+        Logger.logInfo("Closing socket with ${socket.inetAddress}:${socket.port}", 0)
         controller.flushSession()
         socket.close()
     }
-
 }
