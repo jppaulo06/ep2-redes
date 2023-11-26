@@ -14,7 +14,7 @@ class Controller(private val address: InetAddress) {
     private var session: Session = Session(address)
 
     fun flushSession() {
-        if(session.isLoggedIn())
+        if (session.isLoggedIn())
             session.logout()
         session = Session(address)
     }
@@ -24,20 +24,18 @@ class Controller(private val address: InetAddress) {
 
         return try {
             when (clientMessage.type) {
-                "command" -> handleMethod(clientMessage)
+                "command" -> handleCommand(clientMessage)
                 "disconnect" -> handleDisconnect()
                 else -> throw InvalidMessage("Received unsupported message type : ${clientMessage.type}")
             }
-        }
-        catch (e: CustomException){
+        } catch (e: CustomException) {
             errorMessage(e)
-        }
-        catch (e: Exception){
+        } catch (e: Exception) {
             errorMessage(e)
         }
     }
 
-    private fun handleMethod(clientMessage: Message) = when (clientMessage.command) {
+    private fun handleCommand(clientMessage: Message) = when (clientMessage.command) {
         "registerUser" -> handleRegisterUser(clientMessage)
         "loginUser" -> handleLoginUser(clientMessage)
         "logoutUser" -> handleLogoutUser(clientMessage)
@@ -51,8 +49,8 @@ class Controller(private val address: InetAddress) {
     }
 
     private fun handleRegisterUser(clientMessage: Message): Message {
-        if(clientMessage.body?.username == null || clientMessage.body.password == null){
-           throw InvalidMessage("Username or password not passed for registering")
+        if (clientMessage.body?.username == null || clientMessage.body.password == null) {
+            throw InvalidMessage("Username or password not passed for registering")
         }
 
         val username: String = clientMessage.body.username
@@ -69,11 +67,11 @@ class Controller(private val address: InetAddress) {
     }
 
     private fun handleLoginUser(clientMessage: Message): Message {
-        if(
+        if (
             clientMessage.body?.username == null ||
             clientMessage.body.password == null ||
             clientMessage.body.port == null
-            ){
+        ) {
             throw InvalidMessage("Username, password or port not passed for logging in")
         }
 
@@ -81,8 +79,8 @@ class Controller(private val address: InetAddress) {
         val password: String = clientMessage.body.password
         val port: Int = clientMessage.body.port
 
-        if(UserManager.matches(username, password)){
-            if(session.isLoggedIn()){
+        if (UserManager.matches(username, password)) {
+            if (session.isLoggedIn()) {
                 throw InvalidAuthentication("[ERROR] User is already logged in")
             }
 
@@ -94,40 +92,39 @@ class Controller(private val address: InetAddress) {
                 type = "commandAck",
                 command = clientMessage.command,
                 status = 200,
-                body = Body(info = "User logged in!", username=username)
+                body = Body(info = "User logged in!", username = username)
             )
-        }
-        else throw InvalidCredentials("Wrong username or password")
+        } else throw InvalidCredentials("Wrong username or password")
     }
 
-   private fun handleLogoutUser(clientMessage: Message): Message {
-       if(session.isOffline()){
+    private fun handleLogoutUser(clientMessage: Message): Message {
+        if (session.isOffline()) {
             throw InvalidAuthentication("User is not logged in")
-       }
+        }
 
-       val username = session.username
+        val username = session.username
 
-       session.logout()
-       flushSession()
+        session.logout()
+        flushSession()
 
-       return Message(
-           type = "commandAck",
-           command = clientMessage.command,
-           status = 200,
-           body = Body(info = "User logged out!", username = username)
-       )
+        return Message(
+            type = "commandAck",
+            command = clientMessage.command,
+            status = 200,
+            body = Body(info = "User logged out!", username = username)
+        )
     }
 
     private fun handleChangePassword(clientMessage: Message): Message {
-        if(clientMessage.body?.password == null || clientMessage.body.newPassword == null){
+        if (clientMessage.body?.password == null || clientMessage.body.newPassword == null) {
             throw InvalidMessage("Username or password not passed for registering")
         }
 
-        if(session.isOffline()){
+        if (session.isOffline()) {
             throw InvalidAuthentication("User is not logged in")
         }
 
-        if(!UserManager.matches(session.username!!, clientMessage.body.password)){
+        if (!UserManager.matches(session.username!!, clientMessage.body.password)) {
             throw InvalidAuthentication("Password doesn't match current password")
         }
 
@@ -142,7 +139,7 @@ class Controller(private val address: InetAddress) {
     }
 
     private fun handleStartGame(clientMessage: Message): Message {
-        if(session.isOffline()){
+        if (session.isOffline()) {
             throw InvalidAuthentication("User is not logged in")
         }
 
@@ -157,13 +154,13 @@ class Controller(private val address: InetAddress) {
     }
 
     private fun handleStopGame(clientMessage: Message): Message {
-        if(clientMessage.body?.score == null){
+        if (clientMessage.body?.score == null) {
             throw InvalidMessage("Score not provided when finishing game")
         }
 
         val score = clientMessage.body.score
 
-        if(!session.isPlaying()){
+        if (!session.isPlaying()) {
             throw InvalidAuthentication("User is not playing")
         }
 
@@ -179,20 +176,20 @@ class Controller(private val address: InetAddress) {
     }
 
     private fun handleChallengeUser(clientMessage: Message): Message {
-        if(clientMessage.body?.username == null){
+        if (clientMessage.body?.username == null) {
             throw InvalidMessage("Username not passed for challenging")
         }
 
-        val username: String = clientMessage.body.username
+        val username = clientMessage.body.username
+        val adversary = UserManager.getSession(username)!!
 
-        // TODO: Verify if the user is not already playing with someone. There is a lot of logic to implement
-        // of remote playing yet...
-
-        if(!UserManager.existsUser(username)){
+        if (!UserManager.existsUser(username)) {
             throw InvalidUser("User $username does not exist")
         }
 
-        val session = UserManager.getSession(username)!!
+        if(adversary.isOffline() || !adversary.isPlaying()) {
+            throw InvalidUser("Bro is not even available")
+        }
 
         return Message(
             type = "commandAck",
@@ -221,11 +218,11 @@ class Controller(private val address: InetAddress) {
     }
 
     private fun handleUpdateScore(clientMessage: Message): Message {
-        if(clientMessage.body?.score == null){
+        if (clientMessage.body?.score == null) {
             throw InvalidMessage("New score was not provided")
         }
-        if(session.isOffline()){
-           throw InvalidAuthentication("User is not logged in")
+        if (session.isOffline()) {
+            throw InvalidAuthentication("User is not logged in")
         }
         val score = clientMessage.body.score
         UserManager.updateScore(session.username!!, score)
@@ -240,12 +237,13 @@ class Controller(private val address: InetAddress) {
     private fun errorMessage(e: Exception): Message {
         Logger.log("[ERROR]: ${e.message}", 0)
         Logger.log("[ERROR]: Responding client with error message...", 0)
-        return when(e) {
+        return when (e) {
             is CustomException -> Message(
                 type = "error",
                 status = e.status,
                 body = Body(info = e.message)
             )
+
             else -> Message(
                 type = "error",
                 status = 500,

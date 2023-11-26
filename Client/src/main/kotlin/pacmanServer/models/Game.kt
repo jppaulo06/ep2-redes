@@ -1,18 +1,29 @@
 package pacmanServer.models
 
 import pacmanServer.models.gameStructures.*
-import pacmanServer.structures.errors.InvalidPosition
-import pacmanServer.views.CommandLine
-import pacmanServer.views.Logger
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.atomic.AtomicBoolean
 
-class Game(grid: List<List<Char>>) {
+class Game(
+    grid: List<List<Char>>,
+    private val localMovementQueue: BlockingQueue<Direction>,
+    private val remoteMovementQueue: BlockingQueue<Direction>,
+    private val localSavedGridsQueue: LinkedBlockingQueue<List<List<Char>>>,
+    private val remoteSavedGridsQueue: LinkedBlockingQueue<List<List<Char>>>
+) : Runnable {
 
     private var pacman: Pacman
     private var localGhost: Ghost
     private val points: MutableList<Point>
     private val gameMap: GameMap
-    private val score = 0
+    private var eaten = 0
     private var state: GameState = GameState.Playing
+
+    private var remoteIsConnected = AtomicBoolean(false)
+
+    var remotedStarted = false
+    var remoteGhost: RemoteGhost? = null
 
     init {
         gameMap = GameMap(grid)
@@ -22,79 +33,102 @@ class Game(grid: List<List<Char>>) {
         this.pacman = pacman
         this.localGhost = localGhost
         this.points = points
+
+        updateGridToClients()
     }
 
+    override fun run() {
+        processRound()
+    }
+
+    @Synchronized
     fun ended(): Boolean {
         return state != GameState.Playing
     }
 
-    fun localScore(): Int{
-        return if(state == GameState.PacmanWon) 1 else 0
+    @Synchronized
+    fun localWon(): Boolean {
+        if (state == GameState.Playing) throw Exception("Game is still running")
+        return state == GameState.PacmanWon
     }
 
-    fun processRound(direction: Direction) {
-        if(state != GameState.Playing) return
+    @Synchronized
+    fun remoteWon(): Boolean {
+        if (state == GameState.Playing) throw Exception("Game is still running")
+        return state == GameState.GhostsWon
+    }
 
+    fun createRemoteGhost(){
+        val (row, col) = gameMap.getPositionForRemoteGhost(pacman, localGhost, points)
+        remoteGhost = RemoteGhost(row, col, gameMap)
+    }
+
+    private tailrec fun processRound() {
+        updateGame()
         moveLocalGhost()
-        updateGameToClient()
 
-        if(pacmanDied()) return gameOver(GameState.GhostsWon)
+        if (ended()) return
 
-        movePacman(direction)
+        if (remoteGhost != null) {
+            moveRemoteGhost()
+            if(remoteGhost != null) updateGame()
+            if (ended()) return
+        }
+
+        movePacman()
         eatPoints()
 
-        updateGameToClient()
+        updateGame()
+        if (ended()) return
 
-        if(pacmanWon()) return gameOver(GameState.PacmanWon)
-        if(pacmanDied()) return gameOver(GameState.GhostsWon)
-    }
-
-    private fun pacmanDied(): Boolean {
-        return pacman.conflicts(localGhost)
-    }
-
-    private fun eatPoints() {
-        for(point in points) {
-            if(pacman.conflicts(point)) point.eaten = true
-        }
-    }
-
-    private fun movePacman(direction: Direction) {
-        pacman.move(direction)
+        if(remoteGhost != null) remotedStarted = true
+        processRound()
     }
 
     private fun moveLocalGhost() {
-        try {
-            localGhost.move(Direction.entries.random())
+        localGhost.move()
+    }
+
+    private fun moveRemoteGhost() {
+        val direction = remoteMovementQueue.take()
+        if(direction == Direction.DISCONNECT) {
+            remotedStarted = false
+            remoteGhost = null
         }
-        catch (e: InvalidPosition) {
-            moveLocalGhost()
-        }
+        else remoteGhost?.move(direction)
     }
 
-    private fun updateGameToClient() {
-        val grid = gameMap.generateGrid(pacman, localGhost, points)
-        CommandLine.logGame(grid)
+    private fun movePacman() {
+        val direction = localMovementQueue.take()
+        pacman.move(direction)
     }
 
-    private fun pacmanWon(): Boolean{
-        return score == points.size
-    }
-
-    private fun gameOver(newState: GameState) {
-        Logger.log("Game over!", 0)
-        CommandLine.log("Game over!")
-        when(newState) {
-            GameState.PacmanWon -> {
-                CommandLine.log("Pacman won the game with $points points")
-                Logger.log("Pacman won the game with $points points", 0)
+    private fun eatPoints() {
+        for (point in points) {
+            if (pacman.conflicts(point)) {
+                point.eaten = true
+                eaten += 1
             }
-            GameState.GhostsWon -> {
-                CommandLine.log("Ghosts won the game and Pacman got $points points")
-                Logger.log("Ghosts won the game and Pacman got $points points", 0)
-            }
-            else -> throw Exception("This should not happen (SUS)")
         }
-        state = newState
+    }
+
+    private fun updateGame() {
+        if (pacmanDied()) state = GameState.GhostsWon
+        if (pacmanWon()) state = GameState.PacmanWon
+        updateGridToClients()
+    }
+
+    private fun pacmanDied(): Boolean {
+        return pacman.conflicts(localGhost) || (remoteGhost != null && pacman.conflicts(remoteGhost!!))
+    }
+
+    private fun pacmanWon(): Boolean {
+        return eaten == points.size
+    }
+
+    private fun updateGridToClients() {
+        val grid = gameMap.generateGrid(pacman, localGhost, remoteGhost, points)
+        localSavedGridsQueue.put(grid)
+        if(remoteGhost != null) remoteSavedGridsQueue.put(grid)
     }
 }

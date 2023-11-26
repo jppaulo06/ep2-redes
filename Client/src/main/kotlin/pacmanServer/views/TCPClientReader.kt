@@ -55,7 +55,7 @@ class TCPClientReader(
 
         val message: Message = Json.decodeFromString(messageBytes.toString(Charsets.UTF_8))
 
-        Logger.log("[INFO]: message received: ${message.toString()}", 2)
+        Logger.logInfo("Message received: ${message.toString()}", 2)
 
         return message
     }

@@ -9,7 +9,7 @@ object Global {
     const val logPath = "src/main/resources/logs_pacman"
     const val usersFilePath = "src/main/resources/users_pacman"
 
-    private const val gridPath = "src/main/resources/grid.txt"
+    private const val gridPath = "src/main/resources/test_grid_pacman"
     val grid: List<List<Char>>
 
     init {
@@ -28,10 +28,7 @@ object Global {
 
         for (i in 0..<numRows) {
             val line = lines[i]
-            if(numCols != line.length) {
-                throw InvalidGrid()
-            }
-            for (j in 0..<numCols)
+            for (j in line.indices)
                 grid[i][j] = line[j]
         }
 

@@ -1,6 +1,7 @@
 package pacmanServer.structures
 
 import kotlinx.serialization.Serializable
+import pacmanServer.models.gameStructures.Direction
 
 @Serializable
 data class Body(
@@ -13,5 +14,6 @@ data class Body(
     val score: Int? = null,
     val user: UserInfo? = null,
     val users: List<UserInfo>? = null,
-    val grid: List<List<Char>>? = null
+    val grid: List<List<Char>>? = null,
+    val direction: Direction? = null,
 )

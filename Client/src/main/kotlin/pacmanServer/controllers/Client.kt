@@ -1,7 +1,6 @@
 package pacmanServer.controllers
 
 
-import Config
 import kotlinx.coroutines.*
 import pacmanServer.models.Game
 import pacmanServer.models.gameStructures.Direction
@@ -15,10 +14,11 @@ import pacmanServer.views.TCPClientReader
 import pacmanServer.views.TCPClientWriter
 import java.net.Socket
 import java.util.concurrent.BlockingQueue
+import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.SynchronousQueue
 import kotlin.system.exitProcess
 
-class Client (
+class Client(
     serverAddress: String,
     serverPort: Int,
 ) {
@@ -28,12 +28,16 @@ class Client (
 
     private val socket: Socket = Socket(serverAddress, serverPort)
 
-    private val tcpReaderThread = Thread(TCPClientReader(socket.getInputStream(), clientControllerQueue, clientWriterQueue))
+    private val tcpReaderThread =
+        Thread(TCPClientReader(socket.getInputStream(), clientControllerQueue, clientWriterQueue))
     private val tcpWriterThread = Thread(TCPClientWriter(socket.getOutputStream(), clientWriterQueue))
 
-    private val port = Config.clientDefaultPort
+    private var session = Session()
 
-    private var session =  Session()
+    private val localMovementQueue: BlockingQueue<Direction> = SynchronousQueue()
+    private val remoteMovementQueue: BlockingQueue<Direction> = SynchronousQueue()
+    private val localSavedGridsQueue = LinkedBlockingQueue<List<List<Char>>>()
+    private val remoteSavedGridsQueue = LinkedBlockingQueue<List<List<Char>>>()
 
     fun start() = runBlocking {
         Logger.logInfo("Starting processing and threads", 2)
@@ -49,12 +53,12 @@ class Client (
                     socket.close()
                     this.cancel()
                 }
-           }
+            }
         }
         process()
     }
 
-    private fun killServerThreads(){
+    private fun killServerThreads() {
         if (tcpReaderThread.isAlive) {
             tcpWriterThread.interrupt()
         }
@@ -63,7 +67,7 @@ class Client (
         }
     }
 
-    private tailrec fun process(){
+    private tailrec fun process() {
         CommandLine.logCommandLine()
         val (command, args) = CommandLine.readCommand()
         Logger.logInfo("Command read $command with args ${args}}", 2)
@@ -71,33 +75,28 @@ class Client (
         process()
     }
 
-    private fun processCommand(command: String, args: List<String>){
-        if(isGameCommand(command)) processGameCommand(command, args)
+    private fun processCommand(command: String, args: List<String>) {
+        if (isGameCommand(command)) processGameCommand(command, args)
         else processServerCommand(command, args)
     }
 
     private fun processGameCommand(command: String, args: List<String>) {
-        if(!session.isPlaying()) {
-            Logger.logError("User is not playing and tried to execute $command", 0)
-            CommandLine.logError("You have to be playing to execute $command")
-            return
-        }
         try {
             executeGameCommand(command, args)
-        }
-        catch (e: InvalidCommand) {
-            Logger.logError("Invalid command: $command with args $args", 1)
-            CommandLine.logError("Command $command does not exit")
-        }
-        catch (e: InvalidDirection) {
-            Logger.logError("Invalid direction ${args[0]}", 1)
-            CommandLine.logWarning("Please, provide one of these directions: w, a, s, d")
-            CommandLine.log("")
+        } catch (e: InvalidSessionState) {
+            Logger.logError("User tried to execute command $command of playing mode when not playing", 0)
+            CommandLine.logError("You can only execute $command when playing!")
             return
-        }
-        catch (e: Exception) {
-            Logger.logError("Invalid arguments $args for command $command", 1)
-            Logger.logError(e, 1)
+        } catch (e: InvalidCommand) {
+            Logger.logWarning("Invalid command: $command with args $args", 1)
+            CommandLine.logWarning("Command $command does not exit")
+            return
+        } catch (e: InvalidDirection) {
+            Logger.logWarning("Invalid direction ${args[0]}", 1)
+            CommandLine.logWarning("Please, provide one of these directions: w, a, s, d")
+            return
+        } catch (e: Exception) {
+            Logger.logWarning("Invalid arguments $args for command $command", 1)
             CommandLine.logError("Please provide correct arguments for command $command")
             return
         }
@@ -105,6 +104,7 @@ class Client (
 
     private fun executeGameCommand(command: String, args: List<String>) {
         Logger.logInfo("Executing game command $command", 2)
+        executeCommandMiddlewares(command)
         when (command) {
             "move" -> executeMove(args[0])
             "encerra" -> executeStopGame()
@@ -114,46 +114,84 @@ class Client (
     }
 
     private fun executeMove(directionString: String) {
-        val direction: Direction = when(directionString) {
-            "w" -> Direction.UP
-            "s" -> Direction.DOWN
-            "a" -> Direction.LEFT
-            "d" -> Direction.RIGHT
-            else -> throw InvalidDirection()
-        }
-        try {
-            session.game!!.processRound(direction)
-            if(session.game!!.ended()) executeStopGame(session.game!!.localScore())
-        }
-        catch (e: InvalidPosition) {
-            Logger.logWarning("Invalid position for pacman. Movement not executed", 1)
-            CommandLine.logWarning("Take care! There is a wall there. Movement not executed")
-        }
-        catch (e: Exception) {
-            Logger.logError("Unexpected error processing game round", 0)
-            Logger.logError(e, 0)
+        val direction: Direction = mapDirection(directionString)
+        if (session.isRemotePlaying()) {
+            try {
+                val game = session.remoteGame!!
+                game.processRound(direction)
+                if(game.ended) {
+                    handleRemoteEndedGame()
+                }
+            } catch (e: Exception) {
+                Logger.logError("Unexpected error processing game round remote", 0)
+                Logger.logError(e, 0)
+            }
+        } else {
+            try {
+                val x = if(session.game!!.remoteGhost == null || !session.game!!.remotedStarted) 1 else 2
+                getGameUpdates(x)
+                if (gameHasEnded()) {
+                    handleLocalEndedGame()
+                    return
+                }
+                localMovementQueue.put(direction)
+                getGameUpdates(1)
+                if (gameHasEnded()) {
+                    Logger.logInfo("Stopping local game", 0)
+                    handleLocalEndedGame()
+                    return
+                }
+            } catch (e: Exception) {
+                Logger.logError("Unexpected error processing game round local", 0)
+                Logger.logError(e, 0)
+            }
         }
     }
 
     private fun executeStopGame(score: Int = 0) {
-        session.stopPlaying()
-        val stopGameMessage = Message(
-            type = "command",
-            command = "stopGame",
-            body = Body(score = score)
-        )
-        sendRequest(stopGameMessage)
-        val serverMessage = getResponse()
-        try {
-            checkResponse(stopGameMessage, serverMessage)
+        if (session.isRemotePlaying()) {
+            session.remoteGame!!.endConnection()
+            session.stopPlaying()
+            val stopGameMessage = Message(
+                type = "command", command = "stopGame", body = Body(score = score)
+            )
+            sendRequest(stopGameMessage)
+            val serverMessage = getResponse()
+            try {
+                checkResponse(stopGameMessage, serverMessage)
+            } catch (e: ExceptionServer) {
+                CommandLine.logError(e.message ?: "Server returned an error when closing the game :(")
+                Logger.logError(e, 0)
+                return
+            } catch (e: Exception) {
+                Logger.logError("Server returned bad message when stopping the game", 1)
+                Logger.logError(e, 1)
+                CommandLine.logError("Server returned a bad message (this definitely shouldn't have happened .-.)")
+                return
+            }
+            Logger.logInfo("Game stopped successfully", 2)
+        } else {
+            //session.hostClient.sendResult()
+            session.stopPlaying()
+            val stopGameMessage = Message(
+                type = "command", command = "stopGame", body = Body(score = score)
+            )
+            sendRequest(stopGameMessage)
+            val serverMessage = getResponse()
+            try {
+                checkResponse(stopGameMessage, serverMessage)
+            } catch (e: ExceptionServer) {
+                CommandLine.logError(e.message ?: "Server returned an error when closing the game :(")
+                Logger.logError(e, 0)
+                return
+            } catch (e: Exception) {
+                Logger.logError("Server returned bad message when stopping the game", 1)
+                Logger.logError(e, 1)
+                CommandLine.logError("Server returned a bad message (this definitely shouldn't have happened .-.)")
+                return
+            }
+            Logger.logInfo("Game stopped successfully", 2)
         }
-        catch (e: Exception) {
-            Logger.logError("Something went wrong ending the game", 1)
-            Logger.logError(e, 1)
-            CommandLine.logError(e.message ?: "Something went wrong ending the game")
-            return
-        }
-        Logger.logInfo("Game stopped successfully", 2)
     }
 
     private fun executeDelay() {
@@ -163,30 +201,37 @@ class Client (
     private fun processServerCommand(command: String, args: List<String>) {
         val clientMessage: Message
         Logger.logInfo("Executing server command $command", 2)
+
+        if (command == "tchau" && session.isOffline()) exitProcess(0)
+
         try {
+            executeCommandMiddlewares(command)
             clientMessage = createCommandMessage(command, args)
-        }
-        catch (e: InvalidCommand) {
-            Logger.logError("Invalid command: $command with args $args", 1)
-            CommandLine.logError("Command $command does not exit")
+        } catch (e: InvalidSessionState) {
+            CommandLine.logWarning("You can't execute $command now!")
+            Logger.logWarning("User tried to execute not authorized command", 0)
+            return
+        } catch (e: InvalidCommand) {
+            Logger.logWarning("Invalid command: $command with args $args", 1)
+            CommandLine.logWarning("Command $command does not exit")
+            return
+        } catch (e: Exception) {
+            Logger.logWarning("Invalid arguments $args for command $command", 1)
+            CommandLine.logWarning("Please provide correct arguments for command $command")
             return
         }
-        catch (e: Exception) {
-            Logger.logError("Invalid arguments $args for command $command", 1)
-            CommandLine.logError("Please provide correct arguments for command $command")
-            return
-        }
+
         sendRequest(clientMessage)
         val serverMessage = getResponse()
+
         try {
             checkResponse(clientMessage, serverMessage)
             executeServerCommand(command, serverMessage)
-        }
-        catch (e: ExceptionServer) {
-            CommandLine.logError(e.message ?: "Server returned an error message")
+        } catch (e: ExceptionServer) {
+            CommandLine.logError(e.message ?: "Server returned an error :(")
+            Logger.logError(e, 0)
             return
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Logger.logError("There was an error with some server message", 1)
             Logger.logError(e, 1)
             CommandLine.logError("There was an error when communicating with the server :(")
@@ -195,53 +240,66 @@ class Client (
     }
 
     private fun createCommandMessage(command: String, args: List<String>): Message {
-        return when(command) {
-            "novo" -> Message(
-                type = "command",
-                command = "registerUser",
-                body = Body(username = args[0], password = args[1])
-            )
-            "senha" -> Message(
-                type = "command",
-                command = "changePassword",
-                body = Body(password = args[0], newPassword = args[1])
-            )
-            "entra" -> Message(
-                type = "command",
-                command = "loginUser",
-                body = Body(username = args[0], password = args[1], port = port)
-            )
-            "sai" -> Message(
-                type = "command",
-                command = "logoutUser",
-            )
-            "lideres" -> Message(
+        return when (command) {
+            "novo" -> {
+                checkUserIsOffline()
+                return Message(
+                    type = "command", command = "registerUser", body = Body(username = args[0], password = args[1])
+                )
+            }
+
+            "senha" -> {
+                checkUserIsLoggedIn()
+                return Message(
+                    type = "command", command = "changePassword", body = Body(password = args[0], newPassword = args[1])
+                )
+            }
+
+            "entra" -> {
+                checkUserIsOffline()
+                return Message(
+                    type = "command",
+                    command = "loginUser",
+                    body = Body(username = args[0], password = args[1], port = session.port)
+                )
+            }
+
+            "tchau", "sai" -> {
+                checkUserIsLoggedIn()
+                return Message(
+                    type = "command",
+                    command = "logoutUser",
+                )
+            }
+
+            "l", "lideres" -> Message(
                 type = "command",
                 command = "listUsers",
             )
-            "l" -> Message(
-                type = "command",
-                command = "listUsers",
-            )
-            "inicia" -> Message(
-                type = "command",
-                command = "startGame",
-            )
-            "desafio" -> Message(
-                type = "command",
-                command = "getUser",
-                body = Body(username = args[0])
-            )
-            "tchau" -> Message(
-                type = "command",
-                command = "endSession",
-            )
+
+            "inicia" -> {
+                checkUserIsLoggedIn()
+                checkUserIsNotPlaying()
+                return Message(
+                    type = "command",
+                    command = "startGame",
+                )
+            }
+
+            "desafio" -> {
+                checkUserIsLoggedIn()
+                checkUserIsNotPlaying()
+                return Message(
+                    type = "command", command = "challengeUser", body = Body(username = args[0])
+                )
+            }
+
             else -> throw InvalidCommand("Command not found")
         }
     }
 
-    private fun executeServerCommand(command: String, serverMessage: Message){
-        when(command) {
+    private fun executeServerCommand(command: String, serverMessage: Message) {
+        when (command) {
             "novo" -> executeRegisterUser(serverMessage)
             "senha" -> executeChangePassword(serverMessage)
             "entra" -> executeLoginUser(serverMessage)
@@ -250,7 +308,7 @@ class Client (
             "l" -> executeListUsers(serverMessage)
             "inicia" -> executeStartGame(serverMessage)
             "desafio" -> executeChallenge(serverMessage)
-            "tchau" -> executeEndSession(serverMessage)
+            "tchau" -> executeEndSession()
             else -> throw InvalidCommand("Command not found")
         }
     }
@@ -260,35 +318,36 @@ class Client (
         CommandLine.logSuccess("User ${serverMessage.body.username} created successfully!")
     }
 
-    private fun executeLoginUser(serverMessage: Message){
+    private fun executeLoginUser(serverMessage: Message) {
         session.login(username = serverMessage.body!!.username!!)
         Logger.logInfo("User ${serverMessage.body.username} logged in", 0)
         CommandLine.logSuccess("User ${session.username} logged in!")
     }
 
-    private fun executeLogoutUser(serverMessage: Message){
+    private fun executeLogoutUser(serverMessage: Message) {
         session.logout()
         Logger.logInfo("User ${serverMessage.body!!.username} logged out", 0)
         CommandLine.logSuccess("User ${session.username} logged out")
     }
-    private fun executeChangePassword(serverMessage: Message){
+
+    private fun executeChangePassword(serverMessage: Message) {
         Logger.logInfo("User ${serverMessage.body!!.username} changed the password", 0)
         CommandLine.logSuccess("Password for ${session.username} has been changed successfully!")
     }
 
-    private fun executeRanking(serverMessage: Message){
-        if(serverMessage.body!!.users!!.isEmpty()){
+    private fun executeRanking(serverMessage: Message) {
+        if (serverMessage.body!!.users!!.isEmpty()) {
             CommandLine.logWarning("No users registered")
             return
         }
-        val rankedUsers = serverMessage.body.users!!.sortedBy { it.score }
-        for (user in rankedUsers) {
-            CommandLine.log(user.username)
+        val rankedUsers = serverMessage.body.users!!.sortedBy { it.score }.reversed()
+        for ((rank, user) in rankedUsers.withIndex()) {
+            CommandLine.log((rank + 1).toString() + ": " + user.username + " " + user.state + " " + user.score + " points")
         }
     }
 
-    private fun executeListUsers(serverMessage: Message){
-        if(serverMessage.body!!.users!!.isEmpty()){
+    private fun executeListUsers(serverMessage: Message) {
+        if (serverMessage.body!!.users!!.isEmpty()) {
             CommandLine.logWarning("No users registered")
             return
         }
@@ -297,23 +356,36 @@ class Client (
         }
     }
 
-    private fun executeStartGame(serverMessage: Message){
+    private fun executeStartGame(serverMessage: Message) {
         val grid = serverMessage.body!!.grid!!
 
-        Logger.logInfo("Received valid grid", 1)
+        Logger.logInfo("Received grid", 1)
 
-        session.startPlaying(Game(grid))
+        val game = Game(
+            grid, localMovementQueue, remoteMovementQueue, localSavedGridsQueue, remoteSavedGridsQueue
+        )
 
-        Logger.logInfo("Game has been created", 2)
+        session.startPlaying(game)
+
+        val hostClient = HostClient(remoteMovementQueue, remoteSavedGridsQueue, session.game!!)
+        val hostThread = Thread(hostClient)
+        hostThread.start()
+        session.hostThread = hostThread
+        session.hostClient = hostClient
+
+        getGameUpdates(1)
+
+        Logger.logInfo("Game has been created", 0)
     }
 
-    private fun executeChallenge(serverMessage: Message){
-        // start new thread to communicate with the other client
-        // serverMessage shall have the port and address of the user
-        TODO()
+    private fun executeChallenge(serverMessage: Message) {
+        val hostSocket: Socket = Socket(serverMessage.body!!.address!!.substring(1), serverMessage.body.port!!)
+        val remoteGame = RemoteGame(hostSocket)
+
+        session.startRemotePlaying(remoteGame)
     }
 
-    private fun executeEndSession(serverMessage: Message){
+    private fun executeEndSession() {
         CommandLine.logSuccess("Exiting the program...")
         exitProcess(0)
     }
@@ -327,32 +399,80 @@ class Client (
     }
 
     private fun checkResponse(clientMessage: Message, serverMessage: Message) {
-        if(serverMessage.status!! >= 400)
-            throw ExceptionServer(serverMessage.body!!.info!!)
-        if(
-            serverMessage.type != "commandAck" ||
-            serverMessage.command != clientMessage.command
-        )
-            throw InvalidMessage("Received a not expected message from server")
+        if (serverMessage.status!! >= 400) throw ExceptionServer(serverMessage.body!!.info!!)
+        if (serverMessage.type != "commandAck" || serverMessage.command != clientMessage.command) throw InvalidMessage("Received a not expected message from server")
     }
 
     private fun isGameCommand(command: String): Boolean {
         return (command == "atraso") || (command == "move") || (command == "encerra")
     }
 
-    private fun errorMessage(e: Exception): Message {
-        Logger.logError("${e.message}", 0)
-        return when(e) {
-            is CustomException -> Message(
-                type = "error",
-                status = e.status,
-                body = Body(info = e.message)
-            )
-            else -> Message(
-                type = "error",
-                status = 500,
-                body = Body(info = "There was an unexpected error :(")
-            )
+    private fun executeCommandMiddlewares(command: String) {
+        return when (command) {
+            "entra", "novo" -> checkUserIsOffline()
+            "senha", "tchau", "sai" -> checkUserIsLoggedIn()
+            "inicia", "desafio" -> {
+                checkUserIsLoggedIn()
+                checkUserIsNotPlaying()
+            }
+
+            "move", "encerra", "atraso" -> checkUserIsPlaying()
+            else -> Unit
+        }
+    }
+
+    private fun checkUserIsLoggedIn() {
+        if (!session.isLoggedIn()) {
+            throw InvalidSessionState()
+        }
+    }
+
+    private fun checkUserIsPlaying() {
+        if (!session.isPlaying() && !session.isRemotePlaying()) throw InvalidSessionState()
+    }
+
+    private fun checkUserIsNotPlaying() {
+        if (session.isPlaying()) throw InvalidSessionState()
+    }
+
+    private fun checkUserIsOffline() {
+        if (!session.isOffline()) throw InvalidSessionState()
+    }
+
+    private fun mapDirection(directionString: String) = when (directionString) {
+        "w" -> Direction.UP
+        "s" -> Direction.DOWN
+        "a" -> Direction.LEFT
+        "d" -> Direction.RIGHT
+        else -> throw InvalidDirection()
+    }
+
+    private fun handleRemoteEndedGame() {
+        var score = 0
+        val victory = session.remoteGame!!.victory
+        if (victory) {
+            CommandLine.logRemoteWonGame()
+            score = 1
+        } else CommandLine.logRemoteLostGame()
+        executeStopGame(score)
+    }
+
+    private fun handleLocalEndedGame() {
+        var score = 0
+        val victory = session.game!!.localWon()
+        if (victory) {
+            CommandLine.logLocalWonGame()
+            score = 1
+        } else CommandLine.logLocalLostGame()
+        executeStopGame(score)
+    }
+
+    private fun gameHasEnded() = session.game!!.ended()
+
+    private fun getGameUpdates(updates: Int) {
+        for (i in 0..<updates) {
+            val grid = localSavedGridsQueue.take()
+            CommandLine.logGame(grid)
         }
     }
 }
