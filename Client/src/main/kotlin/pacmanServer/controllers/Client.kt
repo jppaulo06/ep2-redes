@@ -44,7 +44,7 @@ class Client(
                 Thread(TCPClientReader(tcpSocket!!.getInputStream(), clientControllerQueue, clientWriterQueue))
             writingThread = Thread(TCPClientWriter(tcpSocket!!.getOutputStream(), clientWriterQueue))
         } else {
-            val udpSocket = DatagramSocket(Config.clientDefaultPort)
+            val udpSocket = DatagramSocket()
             readingThread =
                 Thread(UDPClientReader(udpSocket, clientControllerQueue, clientWriterQueue))
             writingThread = Thread(UDPClientWriter(udpSocket, clientWriterQueue))

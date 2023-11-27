@@ -11,7 +11,7 @@ import pacmanServer.views.Logger
 data class Session(
     var username: String? = null,
     private var state: SessionState = SessionState.Offline,
-    var port: Int = Config.clientDefaultPort,
+    var port: Int = Config.clientPort,
     var game: Game? = null,
     var gameThread: Thread? = null,
     var hostThread: Thread? = null

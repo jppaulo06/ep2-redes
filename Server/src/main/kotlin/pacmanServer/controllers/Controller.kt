@@ -81,8 +81,10 @@ class Controller(private val address: InetAddress) {
 
         if (UserManager.matches(username, password)) {
             if (session.isLoggedIn()) {
+                Logger.logInfo("User $username, ${session.address} tried to log in when already logged in", 0)
                 throw InvalidAuthentication("[ERROR] User is already logged in")
             }
+            Logger.logInfo("User $username, ${session.address} logged in", 0)
 
             session.defineChallengePort(port)
             session.login(username)
@@ -94,7 +96,10 @@ class Controller(private val address: InetAddress) {
                 status = 200,
                 body = Body(info = "User logged in!", username = username)
             )
-        } else throw InvalidCredentials("Wrong username or password")
+        } else {
+            Logger.logInfo("User $username,${session.address} could not log in. Invalid credentials.", 0)
+            throw InvalidCredentials("Wrong username or password")
+        }
     }
 
     private fun handleLogoutUser(clientMessage: Message): Message {
@@ -145,6 +150,8 @@ class Controller(private val address: InetAddress) {
 
         session.startPlaying()
 
+        Logger.logInfo("User ${session.username}, ${session.address} started game", 0)
+
         return Message(
             type = "commandAck",
             command = clientMessage.command,
@@ -164,6 +171,20 @@ class Controller(private val address: InetAddress) {
             throw InvalidAuthentication("User is not playing")
         }
 
+        Logger.logInfo("User ${session.username} exited game", 0)
+
+        if(session.isGhost) {
+            Logger.logInfo("User ${session.username}, ${session.address} is exiting as ghost", 0)
+            if(score == 1) Logger.logInfo("User ${session.username}, ${session.address} won as ghost", 0)
+            else Logger.logInfo("User ${session.username}, ${session.address} lost as ghost", 0)
+            session.isGhost = false
+        }
+        else {
+            Logger.logInfo("Match of user ${session.username}, ${session.address} has ended", 0)
+            if(score == 1) Logger.logInfo("User ${session.username}, ${session.address} won as pacman", 0)
+            else Logger.logInfo("User ${session.username}, ${session.address} lost as pacman", 0)
+        }
+
         session.stopPlaying()
         UserManager.updateScore(session.username!!, score)
 
@@ -181,21 +202,25 @@ class Controller(private val address: InetAddress) {
         }
 
         val username = clientMessage.body.username
-        val adversary = UserManager.getSession(username)!!
 
         if (!UserManager.existsUser(username)) {
             throw InvalidUser("User $username does not exist")
         }
 
+        val adversary = UserManager.getSession(username)!!
+
         if(adversary.isOffline() || !adversary.isPlaying()) {
-            throw InvalidUser("Bro is not even available")
+            throw InvalidUser("User is not available")
         }
+
+        Logger.logInfo("User ${session.username}, ${session.address} is entering as ghost in ${username}, ${adversary.address}:${adversary.port}, match", 0)
+        session.isGhost = true
 
         return Message(
             type = "commandAck",
             command = clientMessage.command,
             status = 200,
-            body = Body(username = session.username, address = session.address.toString(), port = session.port)
+            body = Body(username = session.username, address = adversary.address.toString(), port = adversary.port)
         )
     }
 

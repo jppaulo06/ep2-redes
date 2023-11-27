@@ -4,13 +4,12 @@ import java.io.File
 
 object Global {
     const val serverDefaultPort = 3000
-    const val clientDefaultPort = 3001
     const val maxDatagramSize = 5000
-    const val logLevel = 2
+    const val logLevel = 0
     const val logPath = "src/main/resources/logs_pacman"
     const val usersFilePath = "src/main/resources/users_pacman"
 
-    private const val gridPath = "src/main/resources/test_grid_pacman"
+    private const val gridPath = "src/main/resources/default_grid_pacman"
     val grid: List<List<Char>>
 
     init {

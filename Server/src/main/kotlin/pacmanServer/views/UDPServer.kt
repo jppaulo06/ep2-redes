@@ -36,7 +36,7 @@ class UDPServer(private val port: Int): Runnable {
         val key = "$clientAddress:$clientPort"
 
         if (channelMap[key] == null) {
-            Logger.log("[INFO] New key: $key", 1)
+            Logger.log("[INFO] Client UDP connected: $key", 1)
             val udpClientQueue: BlockingQueue<ByteArray> = SynchronousQueue()
             val writeQueue: BlockingQueue<ByteArray> = SynchronousQueue()
             channelMap[key] = Pair(udpClientQueue, writeQueue)
@@ -50,7 +50,7 @@ class UDPServer(private val port: Int): Runnable {
         val writeQueue = value.second
         val dataToSend = writeQueue.take()
 
-        Logger.logInfo("Sending data to $clientAddress", 0)
+        Logger.logInfo("Sending data to $clientAddress", 1)
         val packet = DatagramPacket(dataToSend, dataToSend.size, clientAddress, clientPort)
         serverSocket.send(packet)
 

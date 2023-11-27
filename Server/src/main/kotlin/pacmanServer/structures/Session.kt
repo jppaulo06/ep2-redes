@@ -12,6 +12,8 @@ data class Session(
     var port: Int = -1
 ){
 
+    var isGhost = false
+
     enum class SessionState {
         Offline,
         LoggedIn,

@@ -12,7 +12,7 @@ class TCPConnectionController(private val socket: Socket) : Runnable {
     private val controller = Controller(socket.inetAddress)
 
     public override fun run() {
-        Logger.logInfo("Connected: ${socket.inetAddress}:${socket.port}", 1)
+        Logger.logInfo("Connected: ${socket.inetAddress}:${socket.port}", 0)
         listen()
     }
 

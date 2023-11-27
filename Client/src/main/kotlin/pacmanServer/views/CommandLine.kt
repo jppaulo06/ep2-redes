@@ -24,7 +24,9 @@ object CommandLine {
     }
 
     fun readCommand(): Pair<String, List<String>> {
-        val commands = readln().split(' ')
+        val line = readln()
+
+        val commands = line.split(' ')
         return commands[0] to commands.subList(1, commands.size)
     }
 
@@ -52,7 +54,7 @@ object CommandLine {
     }
 
     fun logLocalLostGame() {
-        logError("You lost ;-; Skill issue, not my problem")
+        logError("You lost!")
         Logger.logInfo("Pacman (local) lost the game", 0)
     }
 
@@ -62,7 +64,7 @@ object CommandLine {
     }
 
     fun logRemoteLostGame() {
-        logError("You lost ;-; Skill issue, not my problem")
+        logError("You lost!")
         Logger.logInfo("Remote Ghost lost the game", 0)
     }
 }

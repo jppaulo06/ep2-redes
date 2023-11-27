@@ -21,7 +21,7 @@ class TCPServer(private val port: Int): Runnable {
 
     private tailrec fun listen(serverSocket: ServerSocket) {
         val clientSocket = serverSocket.accept()
-        Logger.log("Client connected: ${clientSocket.inetAddress.hostAddress}", 1)
+        Logger.log("Client TCP connected: ${clientSocket.inetAddress.hostAddress}", 1)
         Thread(TCPConnectionController(clientSocket)).start()
         listen(serverSocket)
     }

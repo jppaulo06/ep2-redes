@@ -1,5 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
+
 plugins {
     kotlin("jvm") version "1.9.20"
     kotlin("plugin.serialization") version "1.9.0"

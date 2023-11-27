@@ -22,7 +22,7 @@ class HostClient(
 
     companion object {
 
-        val port = Config.clientDefaultPort
+        val port = Config.clientPort
 
         var serverSocket: ServerSocket = try {
             ServerSocket(port)
