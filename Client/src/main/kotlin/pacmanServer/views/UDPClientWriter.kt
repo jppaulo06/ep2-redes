@@ -38,7 +38,7 @@ class UDPClientWriter(
         val bytesLength = bytesMessage.size.toString().padStart(8, '0').toByteArray()
 
         val dataToSend = bytesLength + bytesMessage
-        val packet = DatagramPacket(dataToSend, dataToSend.size, InetAddress.getByName(Config.serverDefaultAddress), Config.serverDefaultPort)
+        val packet = DatagramPacket(dataToSend, dataToSend.size, InetAddress.getByName(Config.serverAddress), Config.serverPort)
         serverSocket.send(packet)
     }
 }

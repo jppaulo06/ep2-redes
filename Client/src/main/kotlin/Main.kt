@@ -5,8 +5,6 @@ import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
 
-    // Server IP:Server port, Client Challenge port,
-
     val protocol: String
     val serverIp: String
     val serverPort: Int

@@ -3813,3 +3813,634 @@ Client connected: 127.0.0.1
 [INFO] Command read l with args []}
 [INFO] Executing server command l
 [INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO] Starting processing and threads
+[INFO] Starting writer thread
+[INFO] Starting reader thread
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO] Message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=offline, username=joao, score=37), UserInfo(state=offline, username=bla, score=0), UserInfo(state=offline, username=paulo, score=9)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Starting processing and threads
+[INFO] Starting reader thread
+[INFO] Starting writer thread
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO] Message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=offline, username=joao, score=37), UserInfo(state=offline, username=bla, score=0), UserInfo(state=offline, username=paulo, score=9)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read entra with args [joao, paulo]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"joao","password":"paulo","port":3002}}
+[INFO] Message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=joao, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User joao logged in
+[INFO] Command read inicia with args []}
+[INFO] Executing server command inicia
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO] Message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Received grid
+[INFO] Accepting connection
+[INFO] Game has been created
+[INFO] Command read move with args [d]}
+[INFO] Executing game command move
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Command read move with args [d]}
+[INFO] Executing game command move
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Command read move with args [a]}
+[INFO] Executing game command move
+[INFO] Command read move with args [a]}
+[INFO] Executing game command move
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Command read move with args [a]}
+[INFO] Executing game command move
+[INFO] Command read entra with args [paulo, joao]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"paulo","password":"joao","port":3001}}
+[INFO] Message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=paulo, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User paulo logged in
+[INFO] Command read desafio with args [joao]}
+[INFO] Executing server command desafio
+[INFO] Sending message {"type":"command","command":"challengeUser","body":{"username":"joao"}}
+[INFO] Message received: Message(type=commandAck, command=challengeUser, status=200, body=Body(info=null, username=paulo, password=null, newPassword=null, address=/127.0.0.1, port=3002, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+Client connected: 127.0.0.1
+[INFO] Command read move with args [a]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*","C"," "," "," "," ","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, C,  ,  ,  ,  , *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO] Message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"UP"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=UP))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*","C"," "," "," "," ","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*"," ","*","*"," ","*"," ","."," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," "," "," "," "," ","*"," "," "," "," "," "," "," "," "," ","."],["*","*","*","*","*","*",".","*","*",".","*",".","f"," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","C","."," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," "," "," "," "," ","*",".",".",".",".",".",".","."," ",".","F"],["*","*","*","*","*","*",".","*","*",".","*",".","f"," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, C,  ,  ,  ,  , *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, C, .,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  ,  ,  ,  ,  , *, ., ., ., ., ., ., .,  , ., F], [*, *, *, *, *, *, ., *, *, ., *, ., f,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, C, .,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  ,  ,  ,  ,  , *, ., ., ., ., ., ., .,  , ., F], [*, *, *, *, *, *, ., *, *, ., *, ., f,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read move with args [d]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"RIGHT"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=RIGHT))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","C","."," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," "," "," "," "," ","*",".",".",".",".",".",".","."," ",".","F"],["*","*","*","*","*","*",".","*","*",".","*",".","f"," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","C","."," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," "," "," "," "," ","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".",".","f",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, C, .,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  ,  ,  ,  ,  , *, ., ., ., ., ., ., .,  , ., F], [*, *, *, *, *, *, ., *, *, ., *, ., f,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, C, .,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  ,  ,  ,  ,  , *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., ., f, ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Command read move with args [d]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*"," ","C"," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," "," "," "," "," ","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".",".","f",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *,  , C,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  ,  ,  ,  ,  , *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., ., f, ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"UP"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=UP))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*"," ","C"," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," "," "," "," "," ","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".",".","f",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*"," ","C"," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," "," ","f"," "," ","*",".",".",".",".",".",".",".","F",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *,  , C,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  ,  ,  ,  ,  , *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., ., f, ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*"," "," "," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," ","C","f"," "," ","*",".",".",".",".",".",".",".","F",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *,  ,  ,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  , C, f,  ,  , *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *,  ,  ,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  , C, f,  ,  , *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read move with args [a]}
+[INFO] Executing game command move
+[INFO] Command read move with args [a]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"LEFT"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=LEFT))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*"," "," "," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," ","C","f"," "," ","*",".",".",".",".",".",".",".","F",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*"," "," "," "," "," ","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*"," ","f"," "," "," ","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *,  ,  ,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  , C, f,  ,  , *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Pacman (local) lost the game
+[INFO] Stopping host thread
+[INFO] Sending message {"type":"command","command":"stopGame","body":{"score":0}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *,  ,  ,  ,  ,  , *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *,  , f,  ,  ,  , *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending result
+[INFO] Sending feedback message
+[INFO] Sending message {"type":"youWon"}
+[INFO] Message received: Message(type=youWon, command=null, status=null, body=null)
+[INFO] Remote Ghost won the game
+[INFO] Message received: Message(type=commandAck, command=stopGame, status=200, body=Body(info=User stopped playing, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Closing stuff
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"DISCONNECT"}}
+[INFO] Game stopped successfully
+[INFO] Closing socket with /127.0.0.1:3002
+[INFO] Stopping host thread
+[INFO] Sending message {"type":"command","command":"stopGame","body":{"score":1}}
+[INFO] Message received: Message(type=commandAck, command=stopGame, status=200, body=Body(info=User stopped playing, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Game stopped successfully
+[INFO] Command read tchau with args []}
+[INFO] Executing server command tchau
+[INFO] Sending message {"type":"command","command":"logoutUser"}
+[INFO] Message received: Message(type=commandAck, command=logoutUser, status=200, body=Body(info=User logged out!, username=joao, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read tchau with args []}
+[INFO] Executing server command tchau
+[INFO] Sending message {"type":"command","command":"logoutUser"}
+[INFO] Message received: Message(type=commandAck, command=logoutUser, status=200, body=Body(info=User logged out!, username=paulo, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Starting processing and threads
+[INFO] Starting reader thread
+[INFO] Starting writer thread
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO] Message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=offline, username=joao, score=37), UserInfo(state=offline, username=bla, score=0), UserInfo(state=offline, username=paulo, score=10)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Starting processing and threads
+[INFO] Starting UDP reader thread
+[INFO] Starting UDP writer thread
+[INFO] Starting processing and threads
+[INFO] Starting reader thread
+[INFO] Starting writer thread
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO] Message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=offline, username=joao, score=37), UserInfo(state=offline, username=bla, score=0), UserInfo(state=offline, username=paulo, score=10)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO] Message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=offline, username=joao, score=37), UserInfo(state=offline, username=bla, score=0), UserInfo(state=offline, username=paulo, score=10)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Starting processing and threads
+[INFO] Starting UDP reader thread
+[INFO] Starting UDP writer thread
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 221, until now 221
+[INFO]: message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=offline, username=joao, score=37), UserInfo(state=offline, username=bla, score=0), UserInfo(state=offline, username=paulo, score=10)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Starting processing and threads
+[INFO] Starting UDP writer thread
+[INFO] Starting UDP reader thread
+[INFO] Starting processing and threads
+[INFO] Starting reader thread
+[INFO] Starting writer thread
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 221, until now 221
+[INFO]: message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=offline, username=joao, score=37), UserInfo(state=offline, username=bla, score=0), UserInfo(state=offline, username=paulo, score=10)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read entra with args [joao, paulo]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"joao","password":"paulo","port":3001}}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 108, until now 108
+[INFO]: message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=joao, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User joao logged in
+[INFO] Command read entra with args [paulo, joao]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"paulo","password":"joao","port":3002}}
+[INFO] Message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=paulo, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User paulo logged in
+[INFO] Command read inicia with args []}
+[INFO] Executing server command inicia
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 661, until now 661
+[INFO]: message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Received grid
+[INFO] Accepting connection
+[INFO] Game has been created
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Command read desafio with args [joao]}
+[INFO] Executing server command desafio
+[INFO] Sending message {"type":"command","command":"challengeUser","body":{"username":"joao"}}
+[INFO] Message received: Message(type=commandAck, command=challengeUser, status=200, body=Body(info=null, username=paulo, password=null, newPassword=null, address=/127.0.0.1, port=3001, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+Client connected: 127.0.0.1
+[INFO] Command read move with args [d]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," ","C",".","*",".",".",".",".",".",".",".","F",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., .,  , C, ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO] Message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read move with args [d]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"RIGHT"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=RIGHT))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," ","C",".","*",".",".",".",".",".",".",".","F",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ","f",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," ","C",".","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., .,  , C, ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , f, ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., .,  , C, ., *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ","f",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ","C",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," "," ",".","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , f, ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , C, ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., .,  ,  , ., *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read encerra with args []}
+[INFO] Executing game command encerra
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"DISCONNECT"}}
+[INFO] Closing socket with /127.0.0.1:3001
+[INFO] Stopping host thread
+[INFO] Sending message {"type":"command","command":"stopGame","body":{"score":0}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=DISCONNECT))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ","f",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ","C",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," "," ",".","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=stopGame, status=200, body=Body(info=User stopped playing, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Game stopped successfully
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 220, until now 220
+[INFO]: message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=playing, username=joao, score=37), UserInfo(state=offline, username=bla, score=0), UserInfo(state=online, username=paulo, score=10)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read move with args []}
+[INFO] Executing game command move
+[WARNING] Invalid arguments [] for command move
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 220, until now 220
+[INFO]: message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=playing, username=joao, score=37), UserInfo(state=offline, username=bla, score=0), UserInfo(state=online, username=paulo, score=10)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read move with args [d]}
+[INFO] Executing game command move
+[ERROR] User tried to execute command move of playing mode when not playing
+[INFO] Starting processing and threads
+[INFO] Starting UDP reader thread
+[INFO] Starting UDP writer thread
+[INFO] Starting processing and threads
+[INFO] Starting reader thread
+[INFO] Starting writer thread
+[INFO] Command read entra with args [joao, paulo]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"joao","password":"paulo","port":3001}}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 108, until now 108
+[INFO]: message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=joao, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User joao logged in
+[INFO] Command read entra with args [paulo, joao]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"paulo","password":"joao","port":3002}}
+[INFO] Message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=paulo, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User paulo logged in
+[INFO] Command read incia with args []}
+[INFO] Executing server command incia
+[WARNING] Invalid command: incia with args []
+[INFO] Command read inicia with args []}
+[INFO] Executing server command inicia
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO] Message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Received grid
+[INFO] Accepting connection
+[INFO] Game has been created
+[INFO] Command read desafio with args [paulo]}
+[INFO] Executing server command desafio
+[INFO] Sending message {"type":"command","command":"challengeUser","body":{"username":"paulo"}}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 122, until now 122
+[INFO]: message received: Message(type=commandAck, command=challengeUser, status=200, body=Body(info=null, username=joao, password=null, newPassword=null, address=/127.0.0.1, port=3002, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+Client connected: 127.0.0.1
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".","F"," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., F,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 661, until now 661
+[INFO]: message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"UP"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=UP))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".","F"," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".","F","."," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","f"," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., F,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., F, .,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., f,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Command read move with args [a]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","C"," ",".",".","*",".",".",".",".",".","F","."," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","f"," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., C,  , ., ., *, ., ., ., ., ., F, .,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., f,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"UP"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=UP))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","C"," ",".",".","*",".",".",".",".",".","F","."," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","f"," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","f"," ",".",".","*",".",".",".",".",".",".","F"," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., C,  , ., ., *, ., ., ., ., ., F, .,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., f,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., f,  , ., ., *, ., ., ., ., ., ., F,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Pacman (local) lost the game
+[INFO] Stopping host thread
+[INFO] Sending message {"type":"command","command":"stopGame","body":{"score":0}}
+[INFO] Sending result
+[INFO] Sending feedback message
+[INFO] Sending message {"type":"youWon"}
+[INFO] Message received: Message(type=youWon, command=null, status=null, body=null)
+[INFO] Remote Ghost won the game
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"DISCONNECT"}}
+[INFO] Closing socket with /127.0.0.1:3002
+[INFO] Stopping host thread
+[INFO] Message received: Message(type=commandAck, command=stopGame, status=200, body=Body(info=User stopped playing, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Sending message {"type":"command","command":"stopGame","body":{"score":1}}
+[INFO] Received message of type commandAck
+[INFO] Closing stuff
+[INFO] Game stopped successfully
+[INFO]: received datagram
+[INFO]: receiving datagram of size 94, until now 94
+[INFO]: message received: Message(type=commandAck, command=stopGame, status=200, body=Body(info=User stopped playing, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Game stopped successfully
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[ERROR] User tried to execute command move of playing mode when not playing
+[INFO] Command read sai with args []}
+[INFO] Executing server command sai
+[INFO] Sending message {"type":"command","command":"logoutUser"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 110, until now 110
+[INFO]: message received: Message(type=commandAck, command=logoutUser, status=200, body=Body(info=User logged out!, username=joao, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User joao logged out
+[INFO] Command read sai with args []}
+[INFO] Executing server command sai
+[INFO] Sending message {"type":"command","command":"logoutUser"}
+[INFO] Message received: Message(type=commandAck, command=logoutUser, status=200, body=Body(info=User logged out!, username=paulo, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User paulo logged out
+[INFO] Command read tchau with args []}
+[INFO] Executing server command tchau
+[INFO] Command read tchau with args []}
+[INFO] Executing server command tchau
+[INFO] Starting processing and threads
+[INFO] Starting UDP reader thread
+[INFO] Starting UDP writer thread
+[INFO] Starting processing and threads
+[INFO] Starting reader thread
+[INFO] Starting writer thread
+[INFO] Command read entra with args [joao, paulo]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"joao","password":"paulo","port":3001}}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 108, until now 108
+[INFO]: message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=joao, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User joao logged in
+[INFO] Command read entra with args [paulo, joao]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"paulo","password":"joao","port":3002}}
+[INFO] Message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=paulo, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User paulo logged in
+[INFO] Command read inicia with args []}
+[INFO] Executing server command inicia
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 661, until now 661
+[INFO]: message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Received grid
+[INFO] Accepting connection
+[INFO] Game has been created
+[INFO] Command read desafio with args [joao]}
+[INFO] Executing server command desafio
+[INFO] Sending message {"type":"command","command":"challengeUser","body":{"username":"joao"}}
+[INFO] Message received: Message(type=commandAck, command=challengeUser, status=200, body=Body(info=null, username=paulo, password=null, newPassword=null, address=/127.0.0.1, port=3001, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+Client connected: 127.0.0.1
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO] Message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Command read move with args [a]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"LEFT"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=LEFT))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".",".","F",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".",".","C",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," ",".",".","*",".",".",".",".",".",".",".","F",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., ., C, ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., .,  , ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"DOWN"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=DOWN))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".",".","C",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," ",".",".","*",".",".",".",".",".",".",".","F",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".",".","C",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," ",".",".","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., ., C, ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., .,  , ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Command read e with args [w]}
+[INFO] Executing server command e
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".",".","C",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," ",".",".","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[WARNING] Invalid command: e with args [w]
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., ., C, ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., .,  , ., ., *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., ., C, ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., .,  , ., ., *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"DOWN"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=DOWN))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".",".","C",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," ",".",".","*",".",".",".",".",".",".","."," ","F","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".",".","C",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","."," ",".",".","*",".",".",".",".",".",".","."," ",".","F"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., ., C, ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., .,  , ., ., *, ., ., ., ., ., ., .,  , F, .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".","."," ",".","F"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *,  ,  ,  ,  ,  ,  ,  ,  ,  , *, *,  , *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [ ,  ,  ,  ,  ,  ,  ,  ,  ,  , *,  ,  ,  ,  ,  , *,  ,  ,  ,  ,  ,  ,  ,  ,  , .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., .,  , ., F], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"DOWN"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=DOWN))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".","."," ",".","F"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., .,  , ., F], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],["F",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".","."," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [F, ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., .,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Command read mow with args []}
+[INFO] Executing server command mow
+[WARNING] Invalid command: mow with args []
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","f"," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".",".","C",".",".","*",".","*","*",".","*","*","*","*","*","*"],["F",".",".",".","."," ",".",".",".",".","*",".","."," ",".",".","*",".",".",".",".",".",".","."," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., f,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., ., C, ., ., *, ., *, *, ., *, *, *, *, *, *], [F, ., ., ., .,  , ., ., ., ., *, ., .,  , ., ., *, ., ., ., ., ., ., .,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Starting processing and threads
+[INFO] Starting UDP reader thread
+[INFO] Starting UDP writer thread
+[INFO] Starting processing and threads
+[INFO] Starting reader thread
+[INFO] Starting writer thread
+[INFO] Command read entra with args [joao, paulo]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"joao","password":"paulo","port":3001}}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 108, until now 108
+[INFO]: message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=joao, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User joao logged in
+[INFO] Command read entra with args [paulo, joao]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"paulo","password":"joao","port":3002}}
+[INFO] Message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=paulo, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User paulo logged in
+[INFO] Command read inicia with args []}
+[INFO] Executing server command inicia
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 661, until now 661
+[INFO]: message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Received grid
+[INFO] Accepting connection
+[INFO] Game has been created
+[INFO] Command read desafio with args [joao]}
+[INFO] Executing server command desafio
+[INFO] Sending message {"type":"command","command":"challengeUser","body":{"username":"joao"}}
+[INFO] Message received: Message(type=commandAck, command=challengeUser, status=200, body=Body(info=null, username=paulo, password=null, newPassword=null, address=/127.0.0.1, port=3001, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+Client connected: 127.0.0.1
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".","F"," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., F,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"command","command":"startGame"}
+[INFO] Message received: Message(type=commandAck, command=startGame, status=200, body=Body(info=User is now in playing mode, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., ., ., ., *, ., ., ., ., ., ., ., F, ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"UP"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=UP))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".",".","f",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".",".","F"," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".",".","C",".",".","*",".",".",".",".",".","F","."," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","f"," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., ., f, ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., ., F,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., ., C, ., ., *, ., ., ., ., ., F, .,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., f,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Command read move with args [a]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","C"," ",".",".","*",".",".",".",".",".","F","."," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","f"," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Sending message {"type":"ok"}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., C,  , ., ., *, ., ., ., ., ., F, .,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., f,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Message received: Message(type=ok, command=null, status=null, body=null)
+[INFO] Command read move with args [w]}
+[INFO] Executing game command move
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"UP"}}
+[INFO] Message received: Message(type=command, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=UP))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","C"," ",".",".","*",".",".",".",".",".","F","."," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","f"," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., C,  , ., ., *, ., ., ., ., ., F, .,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., f,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Sending message {"type":"commandAck","command":"game","body":{"grid":[["*","*","*","*","*","*",".","*","*",".",".","."," ",".",".",".",".",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*","*",".","*","*",".","*","*","*","*","*","*"],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"],[".",".",".",".","."," ",".",".",".",".","*",".","f"," ",".",".","*",".",".",".",".",".",".","F"," ",".","."],["*","*","*","*","*","*",".","*","*",".","*",".","."," ",".",".","*",".","*","*",".","*","*","*","*","*","*"]]}}
+[INFO] Message received: Message(type=commandAck, command=game, status=null, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=[[*, *, *, *, *, *, ., *, *, ., ., .,  , ., ., ., ., ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *, *, ., *, *, ., *, *, *, *, *, *], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *], [., ., ., ., .,  , ., ., ., ., *, ., f,  , ., ., *, ., ., ., ., ., ., F,  , ., .], [*, *, *, *, *, *, ., *, *, ., *, ., .,  , ., ., *, ., *, *, ., *, *, *, *, *, *]], direction=null))
+[INFO] Command read move with args [s]}
+[INFO] Executing game command move
+[INFO] Pacman (local) lost the game
+[INFO] Stopping host thread
+[INFO] Sending result
+[INFO] Sending message {"type":"command","command":"stopGame","body":{"score":0}}
+[INFO] Sending feedback message
+[INFO] Sending message {"type":"youWon"}
+[INFO] Closing stuff
+[INFO] Message received: Message(type=youWon, command=null, status=null, body=null)
+[INFO] Remote Ghost won the game
+[INFO] Sending message {"type":"command","command":"game","body":{"direction":"DISCONNECT"}}
+[INFO] Closing socket with /127.0.0.1:3001
+[INFO] Stopping host thread
+[INFO] Sending message {"type":"command","command":"stopGame","body":{"score":1}}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 94, until now 94
+[INFO]: message received: Message(type=commandAck, command=stopGame, status=200, body=Body(info=User stopped playing, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Game stopped successfully
+[INFO] Message received: Message(type=commandAck, command=stopGame, status=200, body=Body(info=User stopped playing, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Game stopped successfully
+[INFO] Command read sai with args []}
+[INFO] Executing server command sai
+[INFO] Sending message {"type":"command","command":"logoutUser"}
+[INFO]: received datagram
+[INFO]: receiving datagram of size 110, until now 110
+[INFO]: message received: Message(type=commandAck, command=logoutUser, status=200, body=Body(info=User logged out!, username=joao, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User joao logged out
+[INFO] Command read sai with args []}
+[INFO] Executing server command sai
+[INFO] Sending message {"type":"command","command":"logoutUser"}
+[INFO] Message received: Message(type=commandAck, command=logoutUser, status=200, body=Body(info=User logged out!, username=paulo, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User paulo logged out
+[INFO] Command read tchau with args []}
+[INFO] Executing server command tchau
+[INFO] Command read tchau with args []}
+[INFO] Executing server command tchau
+[INFO] Starting processing and threads
+[INFO] Starting reader thread
+[INFO] Starting writer thread
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO] Message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[UserInfo(state=offline, username=joao, score=38), UserInfo(state=offline, username=bla, score=0), UserInfo(state=offline, username=paulo, score=11)], grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] Command read entra with args [joao, paulo]}
+[INFO] Executing server command entra
+[INFO] Sending message {"type":"command","command":"loginUser","body":{"username":"joao","password":"paulo","port":3002}}
+[INFO] Message received: Message(type=commandAck, command=loginUser, status=200, body=Body(info=User logged in!, username=joao, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=null, grid=null, direction=null))
+[INFO] Received message of type commandAck
+[INFO] User joao logged in
+[INFO] Starting processing and threads
+[INFO] Starting reader thread
+[INFO] Starting writer thread
+[INFO] Command read l with args []}
+[INFO] Executing server command l
+[INFO] Sending message {"type":"command","command":"listUsers"}
+[INFO] Message received: Message(type=commandAck, command=listUsers, status=200, body=Body(info=null, username=null, password=null, newPassword=null, address=null, port=null, score=null, user=null, users=[], grid=null, direction=null))
+[INFO] Received message of type commandAck

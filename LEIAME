@@ -1,0 +1,86 @@
+EP2 - REDES
+
+Nome: João Paulo Pereira da Silva
+NUSP: 13695000
+
+========= VÍDEO YOUTUBE =========
+
+O vídeo está não listado e esse é o link:
+https://www.youtube.com/watch?v=Ls0Z1cOhxtY
+
+========= ARQUIVOS GERADOS =========
+
+- O servidor salva os logs no arquivo ./Server/src/main/resources/logs_pacman
+
+- O servidor salva as contas no arquivo ./Server/src/main/resources/users_pacman
+
+- O servidor salva o mapa no arquivo ./Server/src/main/resources/default_grid_pacman
+
+========= COMO EXECUTAR =========
+
+O ep é inteiro feito em Kotlin, sob a ferramenta de build Gradle. Todo o código
+fonte do Cliente está no diretório Client e todo código fonte do Servidor está
+no diretório Server. Para compilar e executar diretamente com gradle, não seria
+tão complicado, mas resolvi facilitar. Escrevi dois scripts que compilam e
+rodam ambos os códigos, de cliente e de servidor: respectivamente, runClient.sh
+e runServer.sh.
+
+========= SERVIDOR =========
+
+Para compilar e rodar o server, basta rodar
+
+  $ ./runServer.sh porta
+
+Em que 'porta' é a porta em que o servidor ouvirá por requests em todas as interfaces.
+
+========= CLIENTE =========
+
+Para compilar e rodar o server, basta rodar
+
+  $ ./runClient UDP|TCP
+
+ou
+
+  $ ./runClient UDP|TCP serverIP serverPort clientPort
+
+Em que
+
+1. 'serverIP' é o ip em que o servidor está sendo executado.
+
+2. 'serverPort' é a porta em que servidor está esperando por conexões TCP e UDP.
+
+3. 'clientPort' é a porta em que o cliente receberá os desafios durante o seu jogo.
+   Tal definição de porta foi necessária durante o desenvolvimento, uma vez que os testes
+   estavam ocorrendo no mesmo computador.
+
+No primeiro modo de execução, apenas se especifica o protocolo que se quer usar
+para conectar ao servidor. Nesse caso, serverIP, serverPort e clientPort são
+respectivamente definidos para 127.0.0.1, 3000 and 3001, que são os valores
+padrões.
+
+Na segunda maneira de execução, todos esses valores são especificados.
+
+EXEMPLO
+
+  $ ./runClient.sh UDP 8000 127.0.0.1 3000
+
+========= NOTAS =========
+
+Não foi implementado:
+
+1. O sistema de heartbeats entre servidor e cliente
+2. A verifiação de latência entre clientes
+3. A tentativa do cliente de se reconectar ao servidor dentro de 20 segundos.
+
+Está um pouco bugado:
+
+1. Prints do mapa. Por vezes, o pacman ou o fantasma simplesmente desaparecem.
+2. Sair do jogo antecipadamente pode quebrar alguma coisa no sistema de contas.
+3. Mais algumas coisas. É só querer quebrar, que ele quebra kkk
+
+========= CONFIGURAÇÕES DO COMPUTADOR =========
+
+OS: Arch Linux x86_64
+Kernel: 6.5.3-arch1-1
+CPU: AMD Ryzen 5 3500U with Radeon Vega
+Compilador utilizado: gcc (GCC) 13.2.1
