@@ -45,9 +45,7 @@ class HostClient(
 
             val grid = remoteSavedGridsQueue.take()
             val hostMessage = Message(
-                type = "commandAck",
-                command = "game",
-                body = Body(grid = grid)
+                type = "commandAck", command = "game", body = Body(grid = grid)
             )
 
             try {
@@ -59,7 +57,8 @@ class HostClient(
 
             listen()
         } catch (e: Exception) {
-            Logger.logInfo("Something went wrong", 0)
+            Logger.logInfo("Sending result", 0)
+            sendResult()
         } finally {
             Logger.logInfo("Closing stuff", 0)
         }
@@ -101,9 +100,7 @@ class HostClient(
 
         grid = remoteSavedGridsQueue.take()
         hostMessage = Message(
-            type = "commandAck",
-            command = "game",
-            body = Body(grid = grid)
+            type = "commandAck", command = "game", body = Body(grid = grid)
         )
 
         try {
@@ -118,9 +115,7 @@ class HostClient(
 
         grid = remoteSavedGridsQueue.take()
         hostMessage = Message(
-            type = "commandAck",
-            command = "game",
-            body = Body(grid = grid)
+            type = "commandAck", command = "game", body = Body(grid = grid)
         )
 
         try {
@@ -136,9 +131,7 @@ class HostClient(
 
         grid = remoteSavedGridsQueue.take()
         hostMessage = Message(
-            type = "commandAck",
-            command = "game",
-            body = Body(grid = grid)
+            type = "commandAck", command = "game", body = Body(grid = grid)
         )
 
         try {
@@ -146,6 +139,21 @@ class HostClient(
         } catch (e: Exception) {
             closeConnection(e)
             return
+        }
+
+        if(!game.ended()) {
+            hostMessage = Message(
+                type = "ok",
+            )
+            try {
+                writeMessage(hostMessage)
+            } catch (e: Exception) {
+                closeConnection(e)
+                return
+            }
+        }
+        else {
+            sendResult()
         }
 
         listen()
@@ -197,6 +205,4 @@ class HostClient(
             socket.close()
         }
     }
-
-
 }

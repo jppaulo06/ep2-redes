@@ -9,11 +9,10 @@ import java.util.concurrent.SynchronousQueue
 
 class UDPServer(private val port: Int): Runnable {
 
-    private val channelMap = HashMap<String, BlockingQueue<ByteArray>>()
+    private val channelMap = HashMap<String, Pair<BlockingQueue<ByteArray>, BlockingQueue<ByteArray>>>()
     private val buffer = ByteArray(Global.maxDatagramSize)
 
     override fun run() {
-        TODO()
         val serverSocket: DatagramSocket
         try {
             serverSocket = DatagramSocket(port)
@@ -27,6 +26,7 @@ class UDPServer(private val port: Int): Runnable {
     }
 
     private tailrec fun listen(serverSocket: DatagramSocket) {
+
         val datagram = DatagramPacket(buffer, buffer.size)
         serverSocket.receive(datagram)
 
@@ -38,11 +38,21 @@ class UDPServer(private val port: Int): Runnable {
         if (channelMap[key] == null) {
             Logger.log("[INFO] New key: $key", 1)
             val udpClientQueue: BlockingQueue<ByteArray> = SynchronousQueue()
-            channelMap[key] = udpClientQueue
-            Thread(UDPConnectionController(udpClientQueue)).start()
+            val writeQueue: BlockingQueue<ByteArray> = SynchronousQueue()
+            channelMap[key] = Pair(udpClientQueue, writeQueue)
+            Thread(UDPConnectionController(udpClientQueue, writeQueue, clientAddress)).start()
         }
 
-        channelMap[key]!!.put(buffer)
+        val value = channelMap[key]!!
+
+        value.first.put(buffer)
+
+        val writeQueue = value.second
+        val dataToSend = writeQueue.take()
+
+        Logger.logInfo("Sending data to $clientAddress", 0)
+        val packet = DatagramPacket(dataToSend, dataToSend.size, clientAddress, clientPort)
+        serverSocket.send(packet)
 
         listen(serverSocket)
     }

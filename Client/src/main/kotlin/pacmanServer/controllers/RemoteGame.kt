@@ -62,7 +62,9 @@ class RemoteGame(val socket: Socket) {
             return
         }
 
-        while(grids > 0){
+        val ok = 1
+
+        while(grids + ok > 0){
             val hostMessage: Message
 
             try {
@@ -94,6 +96,7 @@ class RemoteGame(val socket: Socket) {
                         return
                     }
                 }
+                "ok" -> return
                 else -> {
                     val grid = hostMessage.body!!.grid!!
                     CommandLine.logGame(grid)

@@ -1,6 +1,7 @@
 package pacmanServer.controllers
 
 
+import Config
 import kotlinx.coroutines.*
 import pacmanServer.models.Game
 import pacmanServer.models.gameStructures.Direction
@@ -8,10 +9,8 @@ import pacmanServer.structures.Body
 import pacmanServer.structures.Message
 import pacmanServer.structures.Session
 import pacmanServer.structures.errors.*
-import pacmanServer.views.CommandLine
-import pacmanServer.views.Logger
-import pacmanServer.views.TCPClientReader
-import pacmanServer.views.TCPClientWriter
+import pacmanServer.views.*
+import java.net.DatagramSocket
 import java.net.Socket
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingQueue
@@ -26,31 +25,45 @@ class Client(
     private val clientControllerQueue: BlockingQueue<Message> = SynchronousQueue()
     private val clientWriterQueue: BlockingQueue<Message> = SynchronousQueue()
 
-    private val socket: Socket = Socket(serverAddress, serverPort)
-
-    private val tcpReaderThread =
-        Thread(TCPClientReader(socket.getInputStream(), clientControllerQueue, clientWriterQueue))
-    private val tcpWriterThread = Thread(TCPClientWriter(socket.getOutputStream(), clientWriterQueue))
+    private val readingThread: Thread
+    private val writingThread: Thread
 
     private var session = Session()
+
+    private var tcpSocket: Socket? = null
 
     private val localMovementQueue: BlockingQueue<Direction> = SynchronousQueue()
     private val remoteMovementQueue: BlockingQueue<Direction> = SynchronousQueue()
     private val localSavedGridsQueue = LinkedBlockingQueue<List<List<Char>>>()
     private val remoteSavedGridsQueue = LinkedBlockingQueue<List<List<Char>>>()
 
+    init {
+        if (Config.protocol == "TCP") {
+            tcpSocket = Socket(serverAddress, serverPort)
+            readingThread =
+                Thread(TCPClientReader(tcpSocket!!.getInputStream(), clientControllerQueue, clientWriterQueue))
+            writingThread = Thread(TCPClientWriter(tcpSocket!!.getOutputStream(), clientWriterQueue))
+        } else {
+            val udpSocket = DatagramSocket(Config.clientDefaultPort)
+            readingThread =
+                Thread(UDPClientReader(udpSocket, clientControllerQueue, clientWriterQueue))
+            writingThread = Thread(UDPClientWriter(udpSocket, clientWriterQueue))
+        }
+    }
+
     fun start() = runBlocking {
         Logger.logInfo("Starting processing and threads", 2)
-        tcpReaderThread.start()
-        tcpWriterThread.start()
+        readingThread.start()
+        writingThread.start()
 
         launch() {
+            if(Config.protocol != "TCP") this.cancel()
             while (isActive) {
                 delay(1000)
-                if (!tcpReaderThread.isAlive || !tcpWriterThread.isAlive) {
+                if (!readingThread.isAlive || !writingThread.isAlive) {
                     Logger.logError("Connection closing", 0)
                     killServerThreads()
-                    socket.close()
+                    tcpSocket!!.close()
                     this.cancel()
                 }
             }
@@ -59,11 +72,11 @@ class Client(
     }
 
     private fun killServerThreads() {
-        if (tcpReaderThread.isAlive) {
-            tcpWriterThread.interrupt()
+        if (readingThread.isAlive) {
+            readingThread.interrupt()
         }
-        if (tcpWriterThread.isAlive) {
-            tcpWriterThread.interrupt()
+        if (writingThread.isAlive) {
+            writingThread.interrupt()
         }
     }
 
@@ -119,7 +132,7 @@ class Client(
             try {
                 val game = session.remoteGame!!
                 game.processRound(direction)
-                if(game.ended) {
+                if (game.ended) {
                     handleRemoteEndedGame()
                 }
             } catch (e: Exception) {
@@ -128,7 +141,7 @@ class Client(
             }
         } else {
             try {
-                val x = if(session.game!!.remoteGhost == null || !session.game!!.remotedStarted) 1 else 2
+                val x = if (session.game!!.remoteGhost == null || !session.game!!.remotedStarted) 1 else 2
                 getGameUpdates(x)
                 if (gameHasEnded()) {
                     handleLocalEndedGame()
@@ -195,7 +208,7 @@ class Client(
     }
 
     private fun executeDelay() {
-        TODO()
+        CommandLine.logError("Nothing happens. Did not implement that, sir")
     }
 
     private fun processServerCommand(command: String, args: List<String>) {
@@ -325,9 +338,9 @@ class Client(
     }
 
     private fun executeLogoutUser(serverMessage: Message) {
-        session.logout()
         Logger.logInfo("User ${serverMessage.body!!.username} logged out", 0)
         CommandLine.logSuccess("User ${session.username} logged out")
+        session.logout()
     }
 
     private fun executeChangePassword(serverMessage: Message) {
@@ -383,6 +396,27 @@ class Client(
         val remoteGame = RemoteGame(hostSocket)
 
         session.startRemotePlaying(remoteGame)
+
+        val clientMessage = Message(
+            type = "command",
+            command = "startGame",
+        )
+
+        sendRequest(clientMessage)
+        val res = getResponse()
+
+        try {
+            checkResponse(clientMessage, res)
+        } catch (e: ExceptionServer) {
+            CommandLine.logError(e.message ?: "Server returned an error :(")
+            Logger.logError(e, 0)
+            return
+        } catch (e: Exception) {
+            Logger.logError("There was an error with some server message", 1)
+            Logger.logError(e, 1)
+            CommandLine.logError("There was an error when communicating with the server :(")
+            return
+        }
     }
 
     private fun executeEndSession() {

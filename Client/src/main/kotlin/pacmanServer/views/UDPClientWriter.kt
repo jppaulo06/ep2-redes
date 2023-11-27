@@ -1,18 +1,21 @@
 package pacmanServer.views
 
+import Config
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import pacmanServer.structures.Message
-import java.io.OutputStream
+import java.net.DatagramPacket
+import java.net.DatagramSocket
+import java.net.InetAddress
 import java.util.concurrent.BlockingQueue
 
-class TCPClientWriter(
-    private val outputStream: OutputStream,
+class UDPClientWriter(
+    private val serverSocket: DatagramSocket,
     private val clientWriterQueue: BlockingQueue<Message>
 ): Runnable {
 
     override fun run() {
-        Logger.logInfo("Starting writer thread", 0)
+        Logger.logInfo("Starting UDP writer thread", 0)
         write()
     }
 
@@ -33,6 +36,9 @@ class TCPClientWriter(
         Logger.logInfo("Sending message ${Json.encodeToString(message)}", 2)
         val bytesMessage = Json.encodeToString(message).toByteArray()
         val bytesLength = bytesMessage.size.toString().padStart(8, '0').toByteArray()
-        outputStream.write(bytesLength + bytesMessage)
+
+        val dataToSend = bytesLength + bytesMessage
+        val packet = DatagramPacket(dataToSend, dataToSend.size, InetAddress.getByName(Config.serverDefaultAddress), Config.serverDefaultPort)
+        serverSocket.send(packet)
     }
 }

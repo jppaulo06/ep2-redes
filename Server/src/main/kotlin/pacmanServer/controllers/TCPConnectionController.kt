@@ -46,7 +46,7 @@ class TCPConnectionController(private val socket: Socket) : Runnable {
     }
 
     private fun readNextMessage(): Message {
-        val lengthBytes = ByteArray(4)
+        val lengthBytes = ByteArray(8)
 
         var ret = socket.getInputStream().read(lengthBytes)
         if(ret == -1) {

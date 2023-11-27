@@ -1,6 +1,7 @@
 
 import pacmanServer.models.UserManager
 import pacmanServer.views.TCPServer
+import pacmanServer.views.UDPServer
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
@@ -26,6 +27,7 @@ fun main(args: Array<String>) {
     UserManager.load()
 
     Thread(TCPServer(port)).start()
+    Thread(UDPServer(port)).start()
 }
 
 fun logHelp(){
